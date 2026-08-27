@@ -39,26 +39,26 @@ export const Gallery: React.FC = () => {
         overflow: 'hidden',
       }}
     >
-      <div className="section-container" style={{ maxWidth: '1240px', margin: '0 auto' }}>
+      <div className="section-container" style={{ maxWidth: '1280px', margin: '0 auto' }}>
         {/* Section Header */}
         <div className="section-header">
           <span className="section-eyebrow">MOMENTS IN TIME</span>
           <h2 className="section-title">Cherished Memories & Romance</h2>
           <p className="section-subtitle">
-            A visual anthology celebrating laughter, quiet glances, and the magic of our shared journey.
+            A visual anthology celebrating laughter, quiet glances, and the sacred magic of our shared journey.
           </p>
         </div>
 
-        {/* Asymmetric Magazine Gallery Grid with Living / Diverse Motion */}
+        {/* Asymmetric Magazine Gallery Grid with Living Motion */}
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(12, 1fr)',
-            gap: '28px',
-            alignItems: 'center',
+            gap: '24px',
+            alignItems: 'stretch',
           }}
         >
-          {/* Item 1: Large Featured Hero Portrait (Spans 7 cols on desktop, Breathing Optical Zoom) */}
+          {/* Row 1: Item 1 (Spans 7 cols on desktop) */}
           <div
             className="col-span-12 lg:col-span-7 fine-art-photo-frame gold-stationery-frame cursor-pointer group hover-gold-glint"
             data-cursor="view"
@@ -68,8 +68,8 @@ export const Gallery: React.FC = () => {
               borderRadius: '32px',
               border: '2px solid rgba(201, 164, 92, 0.6)',
               boxShadow: '0 20px 50px rgba(26, 5, 10, 0.6)',
-              aspectRatio: '4 / 5',
-              maxHeight: '580px',
+              aspectRatio: '16 / 11',
+              maxHeight: '520px',
               position: 'relative',
               cursor: 'pointer',
               backgroundColor: '#FAF6EE',
@@ -92,7 +92,7 @@ export const Gallery: React.FC = () => {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                padding: '28px',
+                padding: '24px',
                 background: 'linear-gradient(to top, rgba(42, 8, 17, 0.92) 0%, transparent 100%)',
                 color: '#FFFFFF',
                 display: 'flex',
@@ -101,10 +101,10 @@ export const Gallery: React.FC = () => {
               }}
             >
               <div>
-                <h4 style={{ fontFamily: 'var(--font-serif-display)', fontSize: '1.65rem', color: '#FFFDF9' }}>
+                <h4 style={{ fontFamily: 'var(--font-serif-display)', fontSize: '1.5rem', color: '#FFFDF9', margin: 0 }}>
                   {photos[0].title}
                 </h4>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.88rem', color: 'var(--color-gold-light)' }}>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.84rem', color: 'var(--color-gold-light)', margin: '2px 0 0' }}>
                   {photos[0].subtitle}
                 </p>
               </div>
@@ -113,23 +113,22 @@ export const Gallery: React.FC = () => {
                   background: 'rgba(59, 13, 24, 0.9)',
                   border: '1.5px solid var(--color-gold)',
                   borderRadius: '30px',
-                  padding: '8px 16px',
+                  padding: '6px 14px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
                   color: 'var(--color-gold-light)',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.4)',
                 }}
               >
-                <Eye size={16} />
-                <span style={{ fontFamily: 'var(--font-serif-royal)', fontSize: '0.72rem', letterSpacing: '0.12em', fontWeight: 600 }}>
-                  VIEW MEMORY
+                <Eye size={14} />
+                <span style={{ fontFamily: 'var(--font-serif-royal)', fontSize: '0.7rem', letterSpacing: '0.1em', fontWeight: 600 }}>
+                  VIEW
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Item 2: Right Column Tall Photo (Spans 5 cols on desktop, Gentle Floating Motion) */}
+          {/* Row 1: Item 2 (Spans 5 cols on desktop, Floating Motion) */}
           <div
             className="col-span-12 lg:col-span-5 fine-art-photo-frame gold-stationery-frame cursor-pointer group hover-gold-glint animate-float-subtle"
             data-cursor="view"
@@ -139,8 +138,8 @@ export const Gallery: React.FC = () => {
               borderRadius: '32px',
               border: '2px solid rgba(201, 164, 92, 0.6)',
               boxShadow: '0 20px 50px rgba(26, 5, 10, 0.6)',
-              aspectRatio: '3 / 4',
-              maxHeight: '580px',
+              aspectRatio: '4 / 5',
+              maxHeight: '520px',
               position: 'relative',
               cursor: 'pointer',
               backgroundColor: '#FAF6EE',
@@ -153,7 +152,7 @@ export const Gallery: React.FC = () => {
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
-                objectPosition: 'top',
+                objectPosition: 'center 15%',
               }}
             />
             <div
@@ -162,7 +161,7 @@ export const Gallery: React.FC = () => {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                padding: '28px',
+                padding: '24px',
                 background: 'linear-gradient(to top, rgba(59, 13, 24, 0.92) 0%, transparent 100%)',
                 color: '#FFFFFF',
                 display: 'flex',
@@ -171,10 +170,10 @@ export const Gallery: React.FC = () => {
               }}
             >
               <div>
-                <h4 style={{ fontFamily: 'var(--font-serif-display)', fontSize: '1.65rem', color: '#FFFDF9' }}>
+                <h4 style={{ fontFamily: 'var(--font-serif-display)', fontSize: '1.5rem', color: '#FFFDF9', margin: 0 }}>
                   {photos[1].title}
                 </h4>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.88rem', color: 'var(--color-gold-light)' }}>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.84rem', color: 'var(--color-gold-light)', margin: '2px 0 0' }}>
                   {photos[1].subtitle}
                 </p>
               </div>
@@ -183,27 +182,26 @@ export const Gallery: React.FC = () => {
                   background: 'rgba(59, 13, 24, 0.9)',
                   border: '1.5px solid var(--color-gold)',
                   borderRadius: '30px',
-                  padding: '8px 16px',
+                  padding: '6px 14px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
                   color: 'var(--color-gold-light)',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.4)',
                 }}
               >
-                <Eye size={16} />
-                <span style={{ fontFamily: 'var(--font-serif-royal)', fontSize: '0.72rem', letterSpacing: '0.12em', fontWeight: 600 }}>
-                  VIEW MEMORY
+                <Eye size={14} />
+                <span style={{ fontFamily: 'var(--font-serif-royal)', fontSize: '0.7rem', letterSpacing: '0.1em', fontWeight: 600 }}>
+                  VIEW
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Row 2: 3 Distinct Photographs with Varied Ambient Accents */}
+          {/* Subsequent 8 Fine-Art Photographs (Each spans 4 columns / 3 per row on desktop) */}
           {photos.slice(2).map((photo, idx) => (
             <div
               key={photo.id}
-              className="fine-art-photo-frame gold-stationery-frame cursor-pointer group hover-gold-glint"
+              className="col-span-12 md:col-span-6 lg:col-span-4 fine-art-photo-frame gold-stationery-frame cursor-pointer group hover-gold-glint"
               data-cursor="view"
               onClick={() => handleOpen(idx + 2)}
               style={{
@@ -211,21 +209,19 @@ export const Gallery: React.FC = () => {
                 borderRadius: '26px',
                 border: '1.5px solid rgba(201, 164, 92, 0.5)',
                 boxShadow: '0 16px 40px rgba(26, 5, 10, 0.5)',
-                aspectRatio: '4 / 5',
-                maxHeight: '440px',
+                aspectRatio: '3 / 4',
+                maxHeight: '460px',
                 position: 'relative',
                 cursor: 'pointer',
                 backgroundColor: '#FAF6EE',
-                transform: idx === 1 ? 'rotate(-1deg)' : idx === 2 ? 'rotate(1deg)' : 'none',
                 transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
+                e.currentTarget.style.transform = 'translateY(-5px) scale(1.015)';
                 e.currentTarget.style.borderColor = 'var(--color-gold-bright)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform =
-                  idx === 1 ? 'rotate(-1deg)' : idx === 2 ? 'rotate(1deg)' : 'none';
+                e.currentTarget.style.transform = 'none';
                 e.currentTarget.style.borderColor = 'rgba(201, 164, 92, 0.5)';
               }}
             >
@@ -236,7 +232,7 @@ export const Gallery: React.FC = () => {
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
-                  objectPosition: 'center',
+                  objectPosition: 'center 20%',
                 }}
               />
               <div
@@ -245,8 +241,8 @@ export const Gallery: React.FC = () => {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  padding: '20px',
-                  background: 'linear-gradient(to top, rgba(42, 8, 17, 0.9) 0%, transparent 100%)',
+                  padding: '18px 20px',
+                  background: 'linear-gradient(to top, rgba(42, 8, 17, 0.92) 0%, transparent 100%)',
                   color: '#FFFFFF',
                   display: 'flex',
                   alignItems: 'flex-end',
@@ -254,17 +250,17 @@ export const Gallery: React.FC = () => {
                 }}
               >
                 <div>
-                  <h4 style={{ fontFamily: 'var(--font-serif-display)', fontSize: '1.25rem', color: '#FFFDF9' }}>
+                  <h4 style={{ fontFamily: 'var(--font-serif-display)', fontSize: '1.25rem', color: '#FFFDF9', margin: 0 }}>
                     {photo.title}
                   </h4>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.82rem', color: 'var(--color-gold-light)' }}>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', color: 'var(--color-gold-light)', margin: '2px 0 0' }}>
                     {photo.subtitle}
                   </p>
                 </div>
                 <div
                   style={{
-                    width: '36px',
-                    height: '36px',
+                    width: '34px',
+                    height: '34px',
                     borderRadius: '50%',
                     backgroundColor: 'rgba(59, 13, 24, 0.85)',
                     border: '1px solid var(--color-gold)',
@@ -272,9 +268,10 @@ export const Gallery: React.FC = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: 'var(--color-gold-light)',
+                    flexShrink: 0,
                   }}
                 >
-                  <Sparkles size={16} />
+                  <Sparkles size={15} />
                 </div>
               </div>
             </div>
@@ -294,6 +291,11 @@ export const Gallery: React.FC = () => {
       </div>
 
       <style>{`
+        @media (min-width: 768px) {
+          #gallery .md\\:col-span-6 {
+            grid-column: span 6 !important;
+          }
+        }
         @media (min-width: 1024px) {
           #gallery .lg\\:col-span-7 {
             grid-column: span 7 !important;
@@ -301,7 +303,7 @@ export const Gallery: React.FC = () => {
           #gallery .lg\\:col-span-5 {
             grid-column: span 5 !important;
           }
-          #gallery .fine-art-photo-frame:nth-child(n+3) {
+          #gallery .lg\\:col-span-4 {
             grid-column: span 4 !important;
           }
         }
