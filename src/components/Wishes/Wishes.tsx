@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { weddingConfig } from '../../config/wedding';
-import { getStoredWishes, addWish, toggleWishLike } from '../../utils/storage';
+import { getStoredWishes, toggleWishLike } from '../../utils/storage';
 import type { WishData } from '../../utils/storage';
 import { SectionDivider } from '../SectionDivider/SectionDivider';
 import confetti from 'canvas-confetti';
-import { Heart, Send, Sparkles, MessageCircleHeart, User, Users } from 'lucide-react';
-
+import { Heart, Send, Sparkles, MessageCircleHeart, User, Users, CheckCircle2 } from 'lucide-react';
 import { submitToWeb3Forms } from '../../utils/web3forms';
 
 export const Wishes: React.FC = () => {
@@ -14,6 +13,7 @@ export const Wishes: React.FC = () => {
   const [relation, setRelation] = useState('Friend');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     setWishes(getStoredWishes());
@@ -37,12 +37,11 @@ export const Wishes: React.FC = () => {
       `Guestbook Blessing from ${name.trim()} (${relation.trim()})`
     );
 
-    // 2. Add to local state & storage for instant feedback
-    const newEntry = addWish(name, relation, message);
-    setWishes((prev) => [newEntry, ...prev.filter((w) => w.id !== newEntry.id)]);
+    // 2. Clear inputs & show confirmation (list stays stable with prewritten data)
     setName('');
     setMessage('');
     setIsSubmitting(false);
+    setIsSubmitted(true);
 
     try {
       confetti({
@@ -120,144 +119,198 @@ export const Wishes: React.FC = () => {
               </h3>
             </div>
 
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
-              <div>
-                <label
-                  style={{
-                    fontFamily: 'var(--font-serif-royal)',
-                    fontSize: '0.72rem',
-                    letterSpacing: '0.14em',
-                    fontWeight: 700,
-                    color: '#3B0D18',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    marginBottom: '6px',
-                  }}
-                >
-                  <User size={13} color="var(--color-crimson)" />
-                  YOUR NAME *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Ramesh Uncle / Priya & Team"
-                  style={{
-                    width: '100%',
-                    minHeight: '46px',
-                    padding: '10px 14px',
-                    borderRadius: '14px',
-                    border: '1.5px solid rgba(201, 164, 92, 0.45)',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.92rem',
-                    outline: 'none',
-                    backgroundColor: '#FFFFFF',
-                    color: '#3B0D18',
-                    boxSizing: 'border-box',
-                  }}
-                />
-              </div>
-
-              <div>
-                <label
-                  style={{
-                    fontFamily: 'var(--font-serif-royal)',
-                    fontSize: '0.72rem',
-                    letterSpacing: '0.14em',
-                    fontWeight: 700,
-                    color: '#3B0D18',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    marginBottom: '6px',
-                  }}
-                >
-                  <Users size={13} color="var(--color-crimson)" />
-                  RELATION / GROUP
-                </label>
-                <select
-                  value={relation}
-                  onChange={(e) => setRelation(e.target.value)}
-                  style={{
-                    width: '100%',
-                    minHeight: '46px',
-                    padding: '10px 14px',
-                    borderRadius: '14px',
-                    border: '1.5px solid rgba(201, 164, 92, 0.45)',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.92rem',
-                    outline: 'none',
-                    backgroundColor: '#FFFFFF',
-                    color: '#3B0D18',
-                    cursor: 'pointer',
-                    boxSizing: 'border-box',
-                  }}
-                >
-                  <option value="Family">Family / Relative</option>
-                  <option value="Friend">Friend</option>
-                  <option value="Colleague">Colleague / Work</option>
-                  <option value="Well-wisher">Well-wisher</option>
-                  <option value="Kutties">Kutties</option>
-                </select>
-              </div>
-
-              <div>
-                <label
-                  style={{
-                    fontFamily: 'var(--font-serif-royal)',
-                    fontSize: '0.72rem',
-                    letterSpacing: '0.14em',
-                    fontWeight: 700,
-                    color: '#3B0D18',
-                    display: 'block',
-                    marginBottom: '6px',
-                  }}
-                >
-                  YOUR MESSAGE OR PRAYER *
-                </label>
-                <textarea
-                  rows={4}
-                  required
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Share a heartfelt prayer, wish, or loving blessing for Sarvesh & Keerthana..."
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    borderRadius: '14px',
-                    border: '1.5px solid rgba(201, 164, 92, 0.45)',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.92rem',
-                    outline: 'none',
-                    backgroundColor: '#FFFFFF',
-                    color: '#3B0D18',
-                    resize: 'vertical',
-                    boxSizing: 'border-box',
-                  }}
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn-primary"
+            {isSubmitted ? (
+              <div
                 style={{
-                  width: '100%',
-                  minHeight: '48px',
-                  fontSize: '0.88rem',
-                  letterSpacing: '0.08em',
-                  marginTop: '4px',
+                  textAlign: 'center',
+                  padding: '24px 12px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '12px',
+                  backgroundColor: '#FAF2EF',
+                  borderRadius: '20px',
+                  border: '1.5px solid rgba(217, 131, 121, 0.45)',
+                  animation: 'fadeInScale 0.35s ease',
                 }}
               >
-                <Send size={15} />
-                <span>{isSubmitting ? 'Posting Blessing...' : 'Post Loving Blessing'}</span>
-              </button>
-            </form>
+                <CheckCircle2 size={36} color="var(--color-crimson)" />
+                <h4
+                  style={{
+                    fontFamily: 'var(--font-serif-display)',
+                    fontSize: '1.4rem',
+                    color: '#3B0D18',
+                    margin: 0,
+                  }}
+                >
+                  Blessing Received!
+                </h4>
+                <p
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '0.86rem',
+                    color: 'var(--color-forest-rich)',
+                    lineHeight: 1.5,
+                    margin: 0,
+                  }}
+                >
+                  Thank you for your heartfelt prayers and blessings. Your warm wishes have been sent to Sarvesh & Keerthana!
+                </p>
+                <button
+                  onClick={() => setIsSubmitted(false)}
+                  className="btn-secondary"
+                  style={{
+                    minHeight: '40px',
+                    fontSize: '0.78rem',
+                    padding: '6px 16px',
+                    marginTop: '8px',
+                    color: '#3B0D18',
+                    borderColor: 'var(--color-gold)',
+                  }}
+                >
+                  Send another blessing
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
+                <div>
+                  <label
+                    style={{
+                      fontFamily: 'var(--font-serif-royal)',
+                      fontSize: '0.72rem',
+                      letterSpacing: '0.14em',
+                      fontWeight: 700,
+                      color: '#3B0D18',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    <User size={13} color="var(--color-crimson)" />
+                    YOUR NAME *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="e.g. Ramesh Uncle / Priya & Team"
+                    style={{
+                      width: '100%',
+                      minHeight: '46px',
+                      padding: '10px 14px',
+                      borderRadius: '14px',
+                      border: '1.5px solid rgba(201, 164, 92, 0.45)',
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: '0.92rem',
+                      outline: 'none',
+                      backgroundColor: '#FFFFFF',
+                      color: '#3B0D18',
+                      boxSizing: 'border-box',
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      fontFamily: 'var(--font-serif-royal)',
+                      fontSize: '0.72rem',
+                      letterSpacing: '0.14em',
+                      fontWeight: 700,
+                      color: '#3B0D18',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    <Users size={13} color="var(--color-crimson)" />
+                    RELATION / GROUP
+                  </label>
+                  <select
+                    value={relation}
+                    onChange={(e) => setRelation(e.target.value)}
+                    style={{
+                      width: '100%',
+                      minHeight: '46px',
+                      padding: '10px 14px',
+                      borderRadius: '14px',
+                      border: '1.5px solid rgba(201, 164, 92, 0.45)',
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: '0.92rem',
+                      outline: 'none',
+                      backgroundColor: '#FFFFFF',
+                      color: '#3B0D18',
+                      cursor: 'pointer',
+                      boxSizing: 'border-box',
+                    }}
+                  >
+                    <option value="Family">Family / Relative</option>
+                    <option value="Friend">Friend</option>
+                    <option value="Colleague">Colleague / Work</option>
+                    <option value="Well-wisher">Well-wisher</option>
+                    <option value="Kutties">Kutties</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      fontFamily: 'var(--font-serif-royal)',
+                      fontSize: '0.72rem',
+                      letterSpacing: '0.14em',
+                      fontWeight: 700,
+                      color: '#3B0D18',
+                      display: 'block',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    YOUR MESSAGE OR PRAYER *
+                  </label>
+                  <textarea
+                    rows={4}
+                    required
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Share a heartfelt prayer, wish, or loving blessing for Sarvesh & Keerthana..."
+                    style={{
+                      width: '100%',
+                      padding: '10px 14px',
+                      borderRadius: '14px',
+                      border: '1.5px solid rgba(201, 164, 92, 0.45)',
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: '0.92rem',
+                      outline: 'none',
+                      backgroundColor: '#FFFFFF',
+                      color: '#3B0D18',
+                      resize: 'vertical',
+                      boxSizing: 'border-box',
+                    }}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="btn-primary"
+                  style={{
+                    width: '100%',
+                    minHeight: '48px',
+                    fontSize: '0.88rem',
+                    letterSpacing: '0.08em',
+                    marginTop: '4px',
+                  }}
+                >
+                  <Send size={15} />
+                  <span>{isSubmitting ? 'Posting Blessing...' : 'Post Loving Blessing'}</span>
+                </button>
+              </form>
+            )}
           </div>
 
-          {/* Right Column: Scrollable Wishes Cards Feed */}
+          {/* Right Column: Stable Prewritten Curated Blessings Feed */}
           <div
             style={{
               display: 'flex',
