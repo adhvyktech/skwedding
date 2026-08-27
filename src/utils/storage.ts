@@ -20,7 +20,7 @@ export interface WishData {
 }
 
 const RSVP_KEY = 'sk_wedding_rsvp_entries';
-const WISHES_KEY = 'sk_wedding_wishes_entries_v3';
+const WISHES_KEY = 'sk_wedding_wishes_entries_v4';
 
 const INITIAL_WISHES: WishData[] = [
   {
@@ -45,18 +45,27 @@ const INITIAL_WISHES: WishData[] = [
     id: 'wish-2',
     name: 'Sekar Singh & Latha Bai',
     relation: 'Parents',
-    message: 'Heartiest congratulations and affectionate blessings to our dear Sarvesh and Keerthana. May your bond grow stronger with each passing day.',
-    date: '13 Sep 2026',
-    likes: 22,
+    message: 'May Lord Venkateshwara shower divine blessings, health, and a lifetime of radiant happiness upon Sarvesh and Keerthana.',
+    date: '12 Sep 2026',
+    likes: 24,
     isUserAdded: false,
   },
   {
     id: 'wish-3',
+    name: 'Prabhu Prasad & Vani Bai',
+    relation: 'Family',
+    message: 'Heartiest congratulations and affectionate blessings to our dear Sarvesh and Keerthana. May your bond grow stronger with each passing day.',
+    date: '13 Sep 2026',
+    likes: 20,
+    isUserAdded: false,
+  },
+  {
+    id: 'wish-4',
     name: 'Vithyasagar & Lakshmi',
     relation: 'Family',
     message: 'Wishing you both a lifetime of love, understanding, and prosperity. Congratulations to Sarvesh & Keerthana!',
     date: '13 Sep 2026',
-    likes: 15,
+    likes: 18,
     isUserAdded: false,
   },
   {

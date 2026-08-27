@@ -6,6 +6,8 @@ import { SectionDivider } from '../SectionDivider/SectionDivider';
 import confetti from 'canvas-confetti';
 import { Heart, Send, Sparkles, MessageCircleHeart, User, Users } from 'lucide-react';
 
+import { submitToWeb3Forms } from '../../utils/web3forms';
+
 export const Wishes: React.FC = () => {
   const [wishes, setWishes] = useState<WishData[]>([]);
   const [name, setName] = useState('');
@@ -17,29 +19,41 @@ export const Wishes: React.FC = () => {
     setWishes(getStoredWishes());
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !message.trim()) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      const newEntry = addWish(name, relation, message);
-      setWishes((prev) => [newEntry, ...prev.filter((w) => w.id !== newEntry.id)]);
-      setName('');
-      setMessage('');
-      setIsSubmitting(false);
 
-      try {
-        confetti({
-          particleCount: 40,
-          spread: 50,
-          origin: { y: 0.8 },
-          colors: ['#BD2B40', '#C9A45C', '#FAF6EE'],
-        });
-      } catch (err) {
-        console.log('Confetti', err);
-      }
-    }, 300);
+    // 1. Submit to Web3Forms
+    await submitToWeb3Forms(
+      {
+        form_type: 'Wedding Guestbook Blessing',
+        well_wisher_name: name.trim(),
+        relation_or_group: relation.trim(),
+        blessing_message: message.trim(),
+        submitted_at: new Date().toLocaleString(),
+      },
+      `Guestbook Blessing from ${name.trim()} (${relation.trim()})`
+    );
+
+    // 2. Add to local state & storage for instant feedback
+    const newEntry = addWish(name, relation, message);
+    setWishes((prev) => [newEntry, ...prev.filter((w) => w.id !== newEntry.id)]);
+    setName('');
+    setMessage('');
+    setIsSubmitting(false);
+
+    try {
+      confetti({
+        particleCount: 40,
+        spread: 50,
+        origin: { y: 0.8 },
+        colors: ['#BD2B40', '#C9A45C', '#FAF6EE'],
+      });
+    } catch (err) {
+      console.log('Confetti', err);
+    }
   };
 
   const handleLike = (id: string) => {

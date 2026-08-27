@@ -5,6 +5,8 @@ import { SectionDivider } from '../SectionDivider/SectionDivider';
 import confetti from 'canvas-confetti';
 import { Heart, CheckCircle2, User, Phone, Users, Calendar, Send } from 'lucide-react';
 
+import { submitToWeb3Forms } from '../../utils/web3forms';
+
 export const RSVP: React.FC = () => {
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
@@ -24,7 +26,7 @@ export const RSVP: React.FC = () => {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !contact.trim()) {
       alert('Please provide your name and contact details.');
@@ -33,31 +35,45 @@ export const RSVP: React.FC = () => {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      saveRsvp({
-        name: name.trim(),
-        contact: contact.trim(),
-        attending,
-        guestsCount: attending === 'yes' ? guestsCount : 0,
-        selectedEvents: attending === 'yes' ? selectedEvents : [],
-        message: message.trim(),
+    // 1. Submit to Web3Forms
+    await submitToWeb3Forms(
+      {
+        form_type: 'Wedding RSVP',
+        guest_name: name.trim(),
+        guest_contact: contact.trim(),
+        is_attending: attending === 'yes' ? 'Yes, attending with joy!' : 'Regrets / Unable to attend',
+        guests_count: attending === 'yes' ? guestsCount : 0,
+        selected_events: attending === 'yes' ? selectedEvents.join(', ') : 'None',
+        special_message_or_dietary_note: message.trim() || 'None',
+        submitted_at: new Date().toLocaleString(),
+      },
+      `RSVP: ${name.trim()} (${attending === 'yes' ? 'Attending - ' + guestsCount + ' Guests' : 'Declined'})`
+    );
+
+    // 2. Save locally for instant confirmation & offline backup
+    saveRsvp({
+      name: name.trim(),
+      contact: contact.trim(),
+      attending,
+      guestsCount: attending === 'yes' ? guestsCount : 0,
+      selectedEvents: attending === 'yes' ? selectedEvents : [],
+      message: message.trim(),
+    });
+
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+
+    // Trigger subtle celebration petals confetti
+    try {
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.7 },
+        colors: ['#BD2B40', '#C9A45C', '#FAF6EE', '#3E7D5A'],
       });
-
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-
-      // Trigger subtle celebration petals confetti
-      try {
-        confetti({
-          particleCount: 50,
-          spread: 60,
-          origin: { y: 0.7 },
-          colors: ['#BD2B40', '#C9A45C', '#FAF6EE', '#3E7D5A'],
-        });
-      } catch (err) {
-        console.log('Confetti triggered', err);
-      }
-    }, 400);
+    } catch (err) {
+      console.log('Confetti triggered', err);
+    }
   };
 
   return (
