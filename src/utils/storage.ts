@@ -20,7 +20,7 @@ export interface WishData {
 }
 
 const RSVP_KEY = 'sk_wedding_rsvp_entries';
-const WISHES_KEY = 'sk_wedding_wishes_entries';
+const WISHES_KEY = 'sk_wedding_wishes_entries_v3';
 
 const INITIAL_WISHES: WishData[] = [
   {
@@ -29,37 +29,58 @@ const INITIAL_WISHES: WishData[] = [
     relation: 'Kutties',
     message: 'Heartiest congratulations to our dearest Chaacha & Chaachi! We love you both so much and cannot wait to celebrate and dance at the wedding!',
     date: '12 Sep 2026',
-    likes: 24,
+    likes: 28,
     isUserAdded: false,
   },
   {
     id: 'wish-1',
-    name: 'Ramesh & Meena Uncle/Aunt',
-    relation: 'Family',
-    message: 'May Lord Venkateshwara shower immense grace, health, and endless happiness upon Sarvesh & Keerthana as you step into this beautiful holy union.',
+    name: 'Ramprasad & Yasodha Devi',
+    relation: 'Parents',
+    message: 'May Lord Venkateshwara shower both of you with abundant blessings, health, and a lifetime of shared peace and joy.',
     date: '12 Sep 2026',
-    likes: 12,
+    likes: 24,
     isUserAdded: false,
   },
   {
     id: 'wish-2',
-    name: 'Anand & Divya',
-    relation: 'Friends',
-    message: 'Heartiest congratulations to the wonderful couple! Wishing you both a lifetime of adventure, deep understanding, laughter, and prosperity.',
+    name: 'Prabhu Prasad & Vani Bai',
+    relation: 'Family',
+    message: 'Heartiest congratulations and affectionate blessings to our dear Sarvesh and Keerthana. May your bond grow stronger with each passing day.',
     date: '13 Sep 2026',
-    likes: 8,
+    likes: 18,
     isUserAdded: false,
   },
   {
     id: 'wish-3',
-    name: 'Venkatesh Prasad',
-    relation: 'Colleague',
-    message: 'Wishing you a very blessed wedding day and a lifetime of shared dreams turning into reality. Congratulations Sarvesh & Keerthana!',
+    name: 'Vithyasagar & Lakshmi',
+    relation: 'Family',
+    message: 'Wishing you both a lifetime of love, understanding, and prosperity. Congratulations to Sarvesh & Keerthana!',
+    date: '13 Sep 2026',
+    likes: 15,
+    isUserAdded: false,
+  },
+  {
+    id: 'wish-4',
+    name: 'Anand & Divya',
+    relation: 'Friends',
+    message: 'Heartiest congratulations to the wonderful couple! Wishing you both endless laughter, companionship, and happiness.',
     date: '14 Sep 2026',
-    likes: 5,
+    likes: 12,
     isUserAdded: false,
   },
 ];
+
+function sanitizeWish(w: WishData): WishData {
+  let msg = w.message || '';
+  let name = w.name || '';
+  // Cleanse any old anna/akka references to Chaacha & Chaachi
+  msg = msg.replace(/\bAnna\b/g, 'Chaacha')
+           .replace(/\banna\b/g, 'chaacha')
+           .replace(/\bAkka\b/g, 'Chaachi')
+           .replace(/\bakka\b/g, 'chaachi');
+  name = name.replace(/Adhivik/g, 'Adhvik');
+  return { ...w, name, message: msg };
+}
 
 export function getStoredRsvps(): RsvpData[] {
   try {
@@ -91,7 +112,10 @@ export function getStoredWishes(): WishData[] {
   try {
     const raw = localStorage.getItem(WISHES_KEY);
     if (raw) {
-      return JSON.parse(raw);
+      const parsed: WishData[] = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.map(sanitizeWish);
+      }
     }
   } catch (e) {
     console.error('Error reading wishes from localStorage', e);
@@ -102,7 +126,7 @@ export function getStoredWishes(): WishData[] {
 
 export function saveWishesList(wishes: WishData[]): void {
   try {
-    localStorage.setItem(WISHES_KEY, JSON.stringify(wishes));
+    localStorage.setItem(WISHES_KEY, JSON.stringify(wishes.map(sanitizeWish)));
   } catch (e) {
     console.error('Error writing wishes to localStorage', e);
   }
@@ -110,11 +134,17 @@ export function saveWishesList(wishes: WishData[]): void {
 
 export function addWish(name: string, relation: string, message: string): WishData {
   const wishes = getStoredWishes();
+  const sanitizedMsg = message
+    .replace(/\bAnna\b/g, 'Chaacha')
+    .replace(/\banna\b/g, 'chaacha')
+    .replace(/\bAkka\b/g, 'Chaachi')
+    .replace(/\bakka\b/g, 'chaachi');
+
   const newWish: WishData = {
     id: `wish_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
     name: name.trim(),
     relation: relation.trim() || 'Well-wisher',
-    message: message.trim(),
+    message: sanitizedMsg.trim(),
     date: 'Just now',
     likes: 1,
     isUserAdded: true,

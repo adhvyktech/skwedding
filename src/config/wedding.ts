@@ -131,7 +131,7 @@ export const weddingConfig: WeddingConfig = {
     embracePhoto: '/assets/photos/couple_embrace.jpg',
     outdoorPhoto: '/assets/photos/couple_outdoor.jpg',
     closeupPhoto: '/assets/photos/couple_closeup.jpg',
-    candidPhoto: '/assets/photos/couple_candid.jpg',
+    candidPhoto: '/assets/photos/couple_studio_red.jpg',
   },
 
   countdown: {
@@ -442,15 +442,6 @@ export const weddingConfig: WeddingConfig = {
       subtitle: 'When eyes speak a thousand promises',
       category: 'portrait',
       motionType: 'tilt',
-    },
-    {
-      id: 'candid-portrait',
-      src: '/assets/photos/couple_candid.jpg',
-      alt: 'Sarvesh & Keerthana candid laugh',
-      title: 'Unscripted Happiness',
-      subtitle: 'The authentic beauty of two souls in harmony',
-      category: 'candid',
-      motionType: 'shimmer',
     },
   ],
 
