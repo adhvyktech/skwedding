@@ -1,19 +1,19 @@
 /* =========================================================
    Luxury Indian Wedding Living & Breathing Animations
-   Subtle ambient movements & Smoke Dissipate Transitions
+   Subtle ambient movements & Tactile Micro-Interactions
    ========================================================= */
 
-/* 1. Breathing Motion (Very slow scale) */
+/* 1. Breathing Motion (Very slow subtle scale) */
 @keyframes breathingCard {
   0%, 100% {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.006);
+    transform: scale(1.008);
   }
 }
 
-/* 2. Subtle Float (1-3px gentle elevation) */
+/* 2. Subtle Float (1-4px gentle elevation) */
 @keyframes floatSubtle {
   0%, 100% {
     transform: translateY(0px);
@@ -23,13 +23,13 @@
   }
 }
 
-/* 3. Image Breathing (Subtle optical zoom) */
+/* 3. Image Breathing (Subtle optical depth inside frame) */
 @keyframes imageBreath {
   0%, 100% {
-    transform: scale(1);
+    transform: scale(1) translateY(0);
   }
   50% {
-    transform: scale(1.018);
+    transform: scale(1.025) translateY(-2px);
   }
 }
 
@@ -49,7 +49,7 @@
     box-shadow: 0 16px 40px rgba(42, 8, 17, 0.35);
   }
   50% {
-    box-shadow: 0 20px 48px rgba(42, 8, 17, 0.45);
+    box-shadow: 0 22px 52px rgba(42, 8, 17, 0.5);
   }
 }
 
@@ -63,15 +63,16 @@
   }
 }
 
-/* 7. Gold Jigina / Metallic Shimmer */
-@keyframes jiginaShimmer {
+/* 7. Gold Star Twinkle */
+@keyframes goldStarTwinkle {
   0%, 100% {
-    opacity: 0.85;
-    filter: brightness(1);
+    opacity: 0.2;
+    transform: scale(0.7) rotate(0deg);
   }
   50% {
     opacity: 1;
-    filter: brightness(1.2) drop-shadow(0 0 6px rgba(225, 201, 138, 0.6));
+    transform: scale(1.15) rotate(45deg);
+    filter: drop-shadow(0 0 6px rgba(225, 201, 138, 0.8));
   }
 }
 
@@ -117,8 +118,8 @@
 /* 10. Number Roll Up Transition */
 @keyframes numberSlideUp {
   0% {
-    opacity: 0;
-    transform: translateY(12px);
+    opacity: 0.2;
+    transform: translateY(8px);
   }
   100% {
     opacity: 1;
@@ -130,11 +131,25 @@
 @keyframes fadeInScale {
   from {
     opacity: 0;
-    transform: scale(0.96);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* 12. Gold Border Sweep Shimmer */
+@keyframes borderShimmerSweep {
+  0% {
+    border-color: rgba(201, 164, 92, 0.45);
+  }
+  50% {
+    border-color: rgba(225, 201, 138, 0.9);
+    box-shadow: 0 0 18px rgba(201, 164, 92, 0.35);
+  }
+  100% {
+    border-color: rgba(201, 164, 92, 0.45);
   }
 }
 
@@ -176,6 +191,10 @@
   animation: numberSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.animate-gold-twinkle {
+  animation: goldStarTwinkle 3.5s ease-in-out infinite;
+}
+
 /* Metallic Gold Foil Line with periodic glint */
 .shimmer-foil-line {
   background: linear-gradient(
@@ -207,11 +226,11 @@
 
 /* Gold Border Shimmer on Hover */
 .hover-gold-glint {
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hover-gold-glint:hover {
-  box-shadow: 0 0 20px rgba(201, 164, 92, 0.4);
+  box-shadow: 0 0 24px rgba(201, 164, 92, 0.45);
   border-color: var(--color-gold-bright) !important;
 }
 

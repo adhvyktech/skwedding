@@ -282,7 +282,7 @@ p, span, div, a, button, input, select, textarea {
   border: 1.5px solid var(--color-gold-border);
   border-radius: clamp(20px, 4vw, 32px);
   box-shadow: var(--shadow-card);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.45s ease;
   position: relative;
   width: 100%;
   max-width: 100%;
@@ -290,8 +290,9 @@ p, span, div, a, button, input, select, textarea {
 }
 
 .stationery-card:hover {
+  transform: translateY(-4px);
   box-shadow: var(--shadow-card-hover);
-  border-color: var(--color-gold);
+  border-color: var(--color-gold-bright);
 }
 
 /* Gold Ornamental Border Inset */
@@ -313,7 +314,7 @@ p, span, div, a, button, input, select, textarea {
   border-color: rgba(201, 164, 92, 0.65);
 }
 
-/* Fine Art Framed Photography */
+/* Fine Art Framed Photography (Interactive Zoom & Smooth Clipping) */
 .fine-art-photo-frame {
   position: relative;
   overflow: hidden;
@@ -321,7 +322,7 @@ p, span, div, a, button, input, select, textarea {
   background-color: var(--color-ivory-warm);
   border: 2px solid var(--color-gold-border);
   box-shadow: var(--shadow-photo);
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -332,11 +333,21 @@ p, span, div, a, button, input, select, textarea {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.65s ease;
+  transform: scale(1);
+  will-change: transform;
+}
+
+.fine-art-photo-frame:hover img,
+.fine-art-photo-frame:active img,
+.group:hover .fine-art-photo-frame img {
+  transform: scale(1.06);
+  filter: brightness(1.03) contrast(1.02);
 }
 
 .fine-art-photo-frame:hover {
-  border-color: var(--color-gold);
+  border-color: var(--color-gold-bright);
+  box-shadow: 0 24px 55px rgba(26, 5, 10, 0.65);
 }
 
 /* =========================================================
