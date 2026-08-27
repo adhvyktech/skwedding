@@ -65,12 +65,14 @@ export const RSVP: React.FC = () => {
       id="rsvp"
       className="py-24 bg-personality-rsvp relative overflow-hidden"
       style={{
-        padding: '110px 24px',
+        padding: 'clamp(64px, 8vw, 110px) 0',
         position: 'relative',
         overflow: 'hidden',
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
-      <div className="section-container" style={{ maxWidth: '880px', margin: '0 auto' }}>
+      <div className="section-container" style={{ maxWidth: '880px' }}>
         {/* Section Header */}
         <div className="section-header">
           <span className="section-eyebrow">JOIN OUR CELEBRATION</span>
@@ -82,29 +84,31 @@ export const RSVP: React.FC = () => {
         <div
           className="stationery-card gold-stationery-frame"
           style={{
-            borderRadius: '36px',
+            borderRadius: 'clamp(24px, 4vw, 36px)',
             border: '2px solid var(--color-gold)',
             boxShadow: '0 25px 60px rgba(26, 5, 10, 0.6)',
-            padding: 'clamp(32px, 5vw, 54px)',
+            padding: 'clamp(24px, 4.5vw, 48px) clamp(16px, 3.5vw, 40px)',
             backgroundColor: '#FAF6EE',
+            width: '100%',
+            boxSizing: 'border-box',
           }}
         >
           {isSubmitted ? (
             <div
               style={{
                 textAlign: 'center',
-                padding: '40px 20px',
+                padding: 'clamp(24px, 4vw, 40px) 10px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '18px',
+                gap: '16px',
                 animation: 'fadeInScale 0.4s ease',
               }}
             >
               <div
                 style={{
-                  width: '76px',
-                  height: '76px',
+                  width: '68px',
+                  height: '68px',
                   borderRadius: '50%',
                   backgroundColor: '#FAF0E6',
                   border: '2px solid var(--color-crimson)',
@@ -112,18 +116,20 @@ export const RSVP: React.FC = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: 'var(--color-crimson)',
-                  marginBottom: '8px',
+                  marginBottom: '6px',
                   boxShadow: '0 8px 24px rgba(140, 29, 47, 0.2)',
                 }}
               >
-                <CheckCircle2 size={44} />
+                <CheckCircle2 size={38} />
               </div>
 
               <h3
                 style={{
                   fontFamily: 'var(--font-serif-display)',
-                  fontSize: '2.4rem',
-                  color: 'var(--color-maroon-dark)',
+                  fontSize: 'clamp(1.8rem, 4vw, 2.4rem)',
+                  color: '#3B0D18',
+                  lineHeight: 1.15,
+                  margin: 0,
                 }}
               >
                 Thank You, {name}!
@@ -132,10 +138,11 @@ export const RSVP: React.FC = () => {
               <p
                 style={{
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '1.05rem',
+                  fontSize: 'clamp(0.9rem, 1.4vw, 1.05rem)',
                   color: 'var(--color-forest-rich)',
                   maxWidth: '500px',
                   lineHeight: 1.6,
+                  margin: 0,
                 }}
               >
                 {attending === 'yes'
@@ -152,39 +159,41 @@ export const RSVP: React.FC = () => {
                 }}
                 className="btn-secondary"
                 style={{
-                  marginTop: '16px',
-                  color: 'var(--color-maroon-dark)',
+                  marginTop: '12px',
+                  color: '#3B0D18',
                   borderColor: 'var(--color-gold)',
+                  minHeight: '46px',
                 }}
               >
                 Submit another response
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '22px', width: '100%' }}>
               {/* Name & Contact Fields */}
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-                  gap: '20px',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
+                  gap: '16px',
+                  width: '100%',
                 }}
               >
                 <div>
                   <label
                     style={{
                       fontFamily: 'var(--font-serif-royal)',
-                      fontSize: '0.78rem',
+                      fontSize: '0.74rem',
                       letterSpacing: '0.14em',
                       fontWeight: 700,
-                      color: 'var(--color-maroon-dark)',
+                      color: '#3B0D18',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '6px',
-                      marginBottom: '8px',
+                      marginBottom: '6px',
                     }}
                   >
-                    <User size={15} color="var(--color-crimson)" />
+                    <User size={14} color="var(--color-crimson)" />
                     FULL NAME *
                   </label>
                   <input
@@ -195,23 +204,16 @@ export const RSVP: React.FC = () => {
                     placeholder="Enter your full name"
                     style={{
                       width: '100%',
-                      padding: '14px 18px',
+                      minHeight: '48px',
+                      padding: '12px 16px',
                       borderRadius: '16px',
-                      border: '1.5px solid rgba(201, 164, 92, 0.4)',
+                      border: '1.5px solid rgba(201, 164, 92, 0.45)',
                       fontFamily: 'var(--font-sans)',
                       fontSize: '0.95rem',
                       outline: 'none',
                       backgroundColor: '#FFFFFF',
-                      color: 'var(--color-maroon-dark)',
-                      transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--color-gold)';
-                      e.currentTarget.style.boxShadow = '0 0 12px rgba(201, 164, 92, 0.3)';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(201, 164, 92, 0.4)';
-                      e.currentTarget.style.boxShadow = 'none';
+                      color: '#3B0D18',
+                      boxSizing: 'border-box',
                     }}
                   />
                 </div>
@@ -220,17 +222,17 @@ export const RSVP: React.FC = () => {
                   <label
                     style={{
                       fontFamily: 'var(--font-serif-royal)',
-                      fontSize: '0.78rem',
+                      fontSize: '0.74rem',
                       letterSpacing: '0.14em',
                       fontWeight: 700,
-                      color: 'var(--color-maroon-dark)',
+                      color: '#3B0D18',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '6px',
-                      marginBottom: '8px',
+                      marginBottom: '6px',
                     }}
                   >
-                    <Phone size={15} color="var(--color-crimson)" />
+                    <Phone size={14} color="var(--color-crimson)" />
                     PHONE / EMAIL *
                   </label>
                   <input
@@ -241,23 +243,16 @@ export const RSVP: React.FC = () => {
                     placeholder="Phone number or email"
                     style={{
                       width: '100%',
-                      padding: '14px 18px',
+                      minHeight: '48px',
+                      padding: '12px 16px',
                       borderRadius: '16px',
-                      border: '1.5px solid rgba(201, 164, 92, 0.4)',
+                      border: '1.5px solid rgba(201, 164, 92, 0.45)',
                       fontFamily: 'var(--font-sans)',
                       fontSize: '0.95rem',
                       outline: 'none',
                       backgroundColor: '#FFFFFF',
-                      color: 'var(--color-maroon-dark)',
-                      transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--color-gold)';
-                      e.currentTarget.style.boxShadow = '0 0 12px rgba(201, 164, 92, 0.3)';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(201, 164, 92, 0.4)';
-                      e.currentTarget.style.boxShadow = 'none';
+                      color: '#3B0D18',
+                      boxSizing: 'border-box',
                     }}
                   />
                 </div>
@@ -268,38 +263,39 @@ export const RSVP: React.FC = () => {
                 <label
                   style={{
                     fontFamily: 'var(--font-serif-royal)',
-                    fontSize: '0.78rem',
+                    fontSize: '0.74rem',
                     letterSpacing: '0.14em',
                     fontWeight: 700,
-                    color: 'var(--color-maroon-dark)',
+                    color: '#3B0D18',
                     display: 'block',
-                    marginBottom: '10px',
+                    marginBottom: '8px',
                   }}
                 >
                   WILL YOU BE ATTENDING? *
                 </label>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '12px' }}>
                   <button
                     type="button"
                     onClick={() => setAttending('yes')}
                     style={{
-                      padding: '16px',
-                      borderRadius: '18px',
-                      border: attending === 'yes' ? '2px solid var(--color-forest)' : '1.5px solid rgba(201, 164, 92, 0.3)',
+                      minHeight: '48px',
+                      padding: '12px 14px',
+                      borderRadius: '16px',
+                      border: attending === 'yes' ? '2px solid var(--color-forest)' : '1.5px solid rgba(201, 164, 92, 0.35)',
                       backgroundColor: attending === 'yes' ? 'var(--color-sage-light)' : '#FFFFFF',
                       color: attending === 'yes' ? 'var(--color-forest-rich)' : 'var(--text-muted-on-light)',
                       fontFamily: 'var(--font-sans)',
-                      fontSize: '0.95rem',
+                      fontSize: '0.92rem',
                       fontWeight: 600,
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '8px',
-                      transition: 'all 0.2s ease',
+                      boxSizing: 'border-box',
                     }}
                   >
-                    <CheckCircle2 size={18} />
+                    <CheckCircle2 size={16} />
                     <span>Yes, I'll be there!</span>
                   </button>
 
@@ -307,24 +303,25 @@ export const RSVP: React.FC = () => {
                     type="button"
                     onClick={() => setAttending('no')}
                     style={{
-                      padding: '16px',
-                      borderRadius: '18px',
-                      border: attending === 'no' ? '2px solid var(--color-crimson)' : '1.5px solid rgba(201, 164, 92, 0.3)',
+                      minHeight: '48px',
+                      padding: '12px 14px',
+                      borderRadius: '16px',
+                      border: attending === 'no' ? '2px solid var(--color-crimson)' : '1.5px solid rgba(201, 164, 92, 0.35)',
                       backgroundColor: attending === 'no' ? '#FAF2EF' : '#FFFFFF',
                       color: attending === 'no' ? 'var(--color-crimson)' : 'var(--text-muted-on-light)',
                       fontFamily: 'var(--font-sans)',
-                      fontSize: '0.95rem',
+                      fontSize: '0.92rem',
                       fontWeight: 600,
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '8px',
-                      transition: 'all 0.2s ease',
+                      boxSizing: 'border-box',
                     }}
                   >
-                    <Heart size={18} />
-                    <span>Sorry, I can't make it</span>
+                    <Heart size={16} />
+                    <span>Sorry, can't make it</span>
                   </button>
                 </div>
               </div>
@@ -335,50 +332,47 @@ export const RSVP: React.FC = () => {
                   <label
                     style={{
                       fontFamily: 'var(--font-serif-royal)',
-                      fontSize: '0.78rem',
+                      fontSize: '0.74rem',
                       letterSpacing: '0.14em',
                       fontWeight: 700,
-                      color: 'var(--color-maroon-dark)',
+                      color: '#3B0D18',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '6px',
                       marginBottom: '8px',
                     }}
                   >
-                    <Users size={15} color="var(--color-crimson)" />
+                    <Users size={14} color="var(--color-crimson)" />
                     NUMBER OF GUESTS (INCLUDING YOURSELF)
                   </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                     {[1, 2, 3, 4, 5, '6+'].map((num, idx) => (
                       <button
                         key={idx}
                         type="button"
                         onClick={() => setGuestsCount(typeof num === 'number' ? num : 6)}
                         style={{
-                          flex: 1,
-                          padding: '12px 0',
+                          flex: '1 1 44px',
+                          minHeight: '46px',
+                          padding: '10px 0',
                           borderRadius: '14px',
                           border:
                             (typeof num === 'number' && guestsCount === num) || (num === '6+' && guestsCount >= 6)
                               ? '2px solid var(--color-gold)'
-                              : '1px solid rgba(201, 164, 92, 0.3)',
+                              : '1px solid rgba(201, 164, 92, 0.35)',
                           backgroundColor:
                             (typeof num === 'number' && guestsCount === num) || (num === '6+' && guestsCount >= 6)
                               ? '#FFFDF9'
                               : '#FFFFFF',
                           fontFamily: 'var(--font-sans)',
-                          fontSize: '1rem',
+                          fontSize: '0.95rem',
                           fontWeight: 700,
                           color:
                             (typeof num === 'number' && guestsCount === num) || (num === '6+' && guestsCount >= 6)
                               ? 'var(--color-crimson)'
-                              : 'var(--color-maroon-dark)',
+                              : '#3B0D18',
                           cursor: 'pointer',
-                          boxShadow:
-                            (typeof num === 'number' && guestsCount === num) || (num === '6+' && guestsCount >= 6)
-                              ? '0 4px 12px rgba(201, 164, 92, 0.25)'
-                              : 'none',
-                          transition: 'all 0.2s ease',
+                          boxSizing: 'border-box',
                         }}
                       >
                         {num}
@@ -394,20 +388,20 @@ export const RSVP: React.FC = () => {
                   <label
                     style={{
                       fontFamily: 'var(--font-serif-royal)',
-                      fontSize: '0.78rem',
+                      fontSize: '0.74rem',
                       letterSpacing: '0.14em',
                       fontWeight: 700,
-                      color: 'var(--color-maroon-dark)',
+                      color: '#3B0D18',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '6px',
-                      marginBottom: '10px',
+                      marginBottom: '8px',
                     }}
                   >
-                    <Calendar size={15} color="var(--color-crimson)" />
+                    <Calendar size={14} color="var(--color-crimson)" />
                     WHICH EVENTS WILL YOU ATTEND?
                   </label>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
                     {weddingConfig.rsvp.eventsList.map((eventName) => {
                       const checked = selectedEvents.includes(eventName);
                       return (
@@ -417,27 +411,28 @@ export const RSVP: React.FC = () => {
                           style={{
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '12px',
-                            padding: '14px 18px',
-                            borderRadius: '16px',
+                            gap: '10px',
+                            padding: '12px 14px',
+                            borderRadius: '14px',
                             backgroundColor: checked ? '#FFFDF9' : '#FFFFFF',
-                            border: checked ? '1.5px solid var(--color-gold)' : '1px solid rgba(201, 164, 92, 0.3)',
+                            border: checked ? '1.5px solid var(--color-gold)' : '1px solid rgba(201, 164, 92, 0.35)',
                             cursor: 'pointer',
-                            transition: 'all 0.2s ease',
+                            width: '100%',
+                            boxSizing: 'border-box',
                           }}
                         >
                           <input
                             type="checkbox"
                             checked={checked}
                             onChange={() => {}}
-                            style={{ accentColor: 'var(--color-crimson)', width: '18px', height: '18px' }}
+                            style={{ accentColor: 'var(--color-crimson)', width: '18px', height: '18px', flexShrink: 0 }}
                           />
                           <span
                             style={{
                               fontFamily: 'var(--font-sans)',
-                              fontSize: '0.92rem',
+                              fontSize: '0.88rem',
                               fontWeight: 600,
-                              color: 'var(--color-maroon-dark)',
+                              color: '#3B0D18',
                             }}
                           >
                             {eventName}
@@ -454,15 +449,15 @@ export const RSVP: React.FC = () => {
                 <label
                   style={{
                     fontFamily: 'var(--font-serif-royal)',
-                    fontSize: '0.78rem',
+                    fontSize: '0.74rem',
                     letterSpacing: '0.14em',
                     fontWeight: 700,
-                    color: 'var(--color-maroon-dark)',
+                    color: '#3B0D18',
                     display: 'block',
-                    marginBottom: '8px',
+                    marginBottom: '6px',
                   }}
                 >
-                  SPECIAL MESSAGE OR DIETARY NOTE (OPTIONAL)
+                  SPECIAL MESSAGE OR NOTE (OPTIONAL)
                 </label>
                 <textarea
                   rows={3}
@@ -471,15 +466,16 @@ export const RSVP: React.FC = () => {
                   placeholder="Share a wish or note for the couple..."
                   style={{
                     width: '100%',
-                    padding: '14px 18px',
+                    padding: '12px 16px',
                     borderRadius: '16px',
-                    border: '1.5px solid rgba(201, 164, 92, 0.4)',
+                    border: '1.5px solid rgba(201, 164, 92, 0.45)',
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '0.95rem',
+                    fontSize: '0.92rem',
                     outline: 'none',
                     backgroundColor: '#FFFFFF',
-                    color: 'var(--color-maroon-dark)',
+                    color: '#3B0D18',
                     resize: 'vertical',
+                    boxSizing: 'border-box',
                   }}
                 />
               </div>
@@ -491,13 +487,13 @@ export const RSVP: React.FC = () => {
                 className="btn-primary"
                 style={{
                   width: '100%',
-                  height: '52px',
-                  fontSize: '0.95rem',
-                  letterSpacing: '0.1em',
-                  marginTop: '8px',
+                  minHeight: '50px',
+                  fontSize: '0.92rem',
+                  letterSpacing: '0.08em',
+                  marginTop: '4px',
                 }}
               >
-                <Send size={16} />
+                <Send size={15} />
                 <span>{isSubmitting ? 'Confirming Invitation...' : 'Send RSVP Response'}</span>
               </button>
             </form>

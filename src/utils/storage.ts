@@ -43,11 +43,11 @@ const INITIAL_WISHES: WishData[] = [
   },
   {
     id: 'wish-2',
-    name: 'Prabhu Prasad & Vani Bai',
-    relation: 'Family',
+    name: 'Sekar Singh & Latha Bai',
+    relation: 'Parents',
     message: 'Heartiest congratulations and affectionate blessings to our dear Sarvesh and Keerthana. May your bond grow stronger with each passing day.',
     date: '13 Sep 2026',
-    likes: 18,
+    likes: 22,
     isUserAdded: false,
   },
   {

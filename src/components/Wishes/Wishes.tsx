@@ -3,14 +3,15 @@ import { weddingConfig } from '../../config/wedding';
 import { getStoredWishes, addWish, toggleWishLike } from '../../utils/storage';
 import type { WishData } from '../../utils/storage';
 import { SectionDivider } from '../SectionDivider/SectionDivider';
-import { Heart, Send, Sparkles } from 'lucide-react';
+import confetti from 'canvas-confetti';
+import { Heart, Send, Sparkles, MessageCircleHeart, User, Users } from 'lucide-react';
 
 export const Wishes: React.FC = () => {
   const [wishes, setWishes] = useState<WishData[]>([]);
   const [name, setName] = useState('');
   const [relation, setRelation] = useState('Friend');
   const [message, setMessage] = useState('');
-  const [isPosting, setIsPosting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     setWishes(getStoredWishes());
@@ -20,13 +21,24 @@ export const Wishes: React.FC = () => {
     e.preventDefault();
     if (!name.trim() || !message.trim()) return;
 
-    setIsPosting(true);
+    setIsSubmitting(true);
     setTimeout(() => {
-      addWish(name, relation, message);
-      setWishes(getStoredWishes());
+      const newEntry = addWish(name, relation, message);
+      setWishes((prev) => [newEntry, ...prev.filter((w) => w.id !== newEntry.id)]);
       setName('');
       setMessage('');
-      setIsPosting(false);
+      setIsSubmitting(false);
+
+      try {
+        confetti({
+          particleCount: 40,
+          spread: 50,
+          origin: { y: 0.8 },
+          colors: ['#BD2B40', '#C9A45C', '#FAF6EE'],
+        });
+      } catch (err) {
+        console.log('Confetti', err);
+      }
     }, 300);
   };
 
@@ -40,79 +52,76 @@ export const Wishes: React.FC = () => {
       id="wishes"
       className="py-24 bg-personality-wishes relative overflow-hidden"
       style={{
-        padding: '110px 24px',
+        padding: 'clamp(64px, 8vw, 110px) 0',
         position: 'relative',
         overflow: 'hidden',
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
-      <div className="section-container" style={{ maxWidth: '1180px', margin: '0 auto' }}>
+      <div className="section-container" style={{ maxWidth: '1160px' }}>
         {/* Section Header */}
-        <div className="section-header" style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <span className="section-eyebrow">GUESTBOOK & BLESSINGS</span>
+        <div className="section-header">
+          <span className="section-eyebrow">BLESSINGS & GUESTBOOK</span>
           <h2 className="section-title">{weddingConfig.wishes.heading}</h2>
           <p className="section-subtitle">{weddingConfig.wishes.subheading}</p>
         </div>
 
-        {/* Input Form & Wishes Wall Grid */}
+        {/* 2-Column Responsive Layout: Stacks 1-Col on Mobile, 2-Col on Desktop */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '36px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+            gap: 'clamp(24px, 4vw, 36px)',
             alignItems: 'start',
+            marginBottom: 'clamp(32px, 5vw, 48px)',
+            width: '100%',
           }}
         >
-          {/* Left Column: Form to Write a Blessing */}
+          {/* Left Column: Leave a Blessing Form */}
           <div
+            className="stationery-card gold-stationery-frame"
             style={{
-              borderRadius: '32px',
-              padding: '36px 30px',
+              borderRadius: 'clamp(24px, 4vw, 32px)',
+              border: '2px solid rgba(201, 164, 92, 0.65)',
+              padding: 'clamp(24px, 4vw, 36px)',
               backgroundColor: '#FAF6EE',
-              border: '2px solid #C9A45C',
-              boxShadow: '0 16px 40px rgba(0, 0, 0, 0.4)',
-              color: '#3B0D18',
+              boxShadow: '0 16px 45px rgba(26, 5, 10, 0.5)',
+              width: '100%',
+              boxSizing: 'border-box',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '22px' }}>
-              <div
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '18px' }}>
+              <MessageCircleHeart size={20} color="var(--color-crimson)" />
+              <h3
                 style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '50%',
-                  backgroundColor: '#FAF2EF',
-                  border: '1.5px solid #C9A45C',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#8C1D2F',
-                  flexShrink: 0,
+                  fontFamily: 'var(--font-serif-display)',
+                  fontSize: 'clamp(1.5rem, 3vw, 1.9rem)',
+                  color: '#3B0D18',
+                  lineHeight: 1.2,
+                  margin: 0,
                 }}
               >
-                <Heart size={20} fill="#8C1D2F" />
-              </div>
-              <div>
-                <h3 style={{ fontFamily: 'var(--font-serif-display)', fontSize: '1.75rem', color: '#3B0D18', margin: 0, lineHeight: 1.15 }}>
-                  Send Your Blessing
-                </h3>
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', color: '#A8833B', fontWeight: 600 }}>
-                  FOR SARVESH & KEERTHANA
-                </span>
-              </div>
+                Send Your Blessings
+              </h3>
             </div>
 
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
               <div>
                 <label
                   style={{
                     fontFamily: 'var(--font-serif-royal)',
-                    fontSize: '0.75rem',
+                    fontSize: '0.72rem',
                     letterSpacing: '0.14em',
                     fontWeight: 700,
                     color: '#3B0D18',
-                    display: 'block',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
                     marginBottom: '6px',
                   }}
                 >
+                  <User size={13} color="var(--color-crimson)" />
                   YOUR NAME *
                 </label>
                 <input
@@ -120,17 +129,19 @@ export const Wishes: React.FC = () => {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Ramesh Uncle / Sneha"
+                  placeholder="e.g. Ramesh Uncle / Priya & Team"
                   style={{
                     width: '100%',
-                    padding: '13px 16px',
+                    minHeight: '46px',
+                    padding: '10px 14px',
                     borderRadius: '14px',
-                    border: '1.5px solid rgba(201, 164, 92, 0.5)',
+                    border: '1.5px solid rgba(201, 164, 92, 0.45)',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '0.92rem',
                     outline: 'none',
                     backgroundColor: '#FFFFFF',
                     color: '#3B0D18',
+                    boxSizing: 'border-box',
                   }}
                 />
               </div>
@@ -139,35 +150,42 @@ export const Wishes: React.FC = () => {
                 <label
                   style={{
                     fontFamily: 'var(--font-serif-royal)',
-                    fontSize: '0.75rem',
+                    fontSize: '0.72rem',
                     letterSpacing: '0.14em',
                     fontWeight: 700,
                     color: '#3B0D18',
-                    display: 'block',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
                     marginBottom: '6px',
                   }}
                 >
-                  RELATION / TAG
+                  <Users size={13} color="var(--color-crimson)" />
+                  RELATION / GROUP
                 </label>
                 <select
                   value={relation}
                   onChange={(e) => setRelation(e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '13px 16px',
+                    minHeight: '46px',
+                    padding: '10px 14px',
                     borderRadius: '14px',
-                    border: '1.5px solid rgba(201, 164, 92, 0.5)',
+                    border: '1.5px solid rgba(201, 164, 92, 0.45)',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '0.92rem',
                     outline: 'none',
                     backgroundColor: '#FFFFFF',
                     color: '#3B0D18',
+                    cursor: 'pointer',
+                    boxSizing: 'border-box',
                   }}
                 >
-                  <option value="Family">Family</option>
+                  <option value="Family">Family / Relative</option>
                   <option value="Friend">Friend</option>
-                  <option value="Colleague">Colleague</option>
+                  <option value="Colleague">Colleague / Work</option>
                   <option value="Well-wisher">Well-wisher</option>
+                  <option value="Kutties">Kutties</option>
                 </select>
               </div>
 
@@ -175,7 +193,7 @@ export const Wishes: React.FC = () => {
                 <label
                   style={{
                     fontFamily: 'var(--font-serif-royal)',
-                    fontSize: '0.75rem',
+                    fontSize: '0.72rem',
                     letterSpacing: '0.14em',
                     fontWeight: 700,
                     color: '#3B0D18',
@@ -183,159 +201,173 @@ export const Wishes: React.FC = () => {
                     marginBottom: '6px',
                   }}
                 >
-                  YOUR BLESSING / MESSAGE *
+                  YOUR MESSAGE OR PRAYER *
                 </label>
                 <textarea
                   rows={4}
                   required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="May your journey together be blessed with..."
+                  placeholder="Share a heartfelt prayer, wish, or loving blessing for Sarvesh & Keerthana..."
                   style={{
                     width: '100%',
-                    padding: '13px 16px',
+                    padding: '10px 14px',
                     borderRadius: '14px',
-                    border: '1.5px solid rgba(201, 164, 92, 0.5)',
+                    border: '1.5px solid rgba(201, 164, 92, 0.45)',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '0.92rem',
                     outline: 'none',
                     backgroundColor: '#FFFFFF',
                     color: '#3B0D18',
                     resize: 'vertical',
+                    boxSizing: 'border-box',
                   }}
                 />
               </div>
 
               <button
                 type="submit"
-                disabled={isPosting}
+                disabled={isSubmitting}
                 className="btn-primary"
                 style={{
                   width: '100%',
-                  height: '48px',
-                  fontSize: '0.9rem',
+                  minHeight: '48px',
+                  fontSize: '0.88rem',
                   letterSpacing: '0.08em',
                   marginTop: '4px',
                 }}
               >
                 <Send size={15} />
-                <span>{isPosting ? 'Publishing...' : 'Post Blessing'}</span>
+                <span>{isSubmitting ? 'Posting Blessing...' : 'Post Loving Blessing'}</span>
               </button>
             </form>
           </div>
 
-          {/* Right Column: Display List of Wishes — Crisp, Beautifully Styled & 100% Readable */}
+          {/* Right Column: Scrollable Wishes Cards Feed */}
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '20px',
-              maxHeight: '680px',
+              gap: '14px',
+              maxHeight: '620px',
               overflowY: 'auto',
               paddingRight: '6px',
+              width: '100%',
             }}
           >
             {wishes.map((wish) => (
               <div
                 key={wish.id}
+                className="hover-gold-glint"
                 style={{
-                  borderRadius: '24px',
-                  border: '1.5px solid #C9A45C',
-                  padding: '24px 28px',
-                  position: 'relative',
                   backgroundColor: '#FFFDF9',
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
-                  color: '#3B0D18',
-                  height: 'auto',
-                  transition: 'all 0.3s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.borderColor = '#E1C98A';
-                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(201, 164, 92, 0.25)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'none';
-                  e.currentTarget.style.borderColor = '#C9A45C';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.08)';
+                  borderRadius: '20px',
+                  border: '1.5px solid rgba(201, 164, 92, 0.45)',
+                  padding: '18px 20px',
+                  boxShadow: '0 6px 18px rgba(0, 0, 0, 0.05)',
+                  position: 'relative',
+                  width: '100%',
+                  boxSizing: 'border-box',
                 }}
               >
-                {/* Header of Wish Card */}
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '12px', gap: '12px' }}>
+                {/* Wish Top Meta Row */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '8px',
+                  }}
+                >
                   <div>
                     <h4
                       style={{
                         fontFamily: 'var(--font-serif-display)',
-                        fontSize: '1.4rem',
+                        fontSize: '1.25rem',
                         color: '#3B0D18',
-                        fontWeight: 600,
-                        lineHeight: 1.25,
                         margin: 0,
+                        fontWeight: 600,
                       }}
                     >
                       {wish.name}
                     </h4>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
-                      <Sparkles size={12} color="#A8833B" />
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-sans)',
-                          fontSize: '0.78rem',
-                          color: '#A8833B',
-                          fontWeight: 700,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.06em',
-                        }}
-                      >
-                        {wish.relation} • {wish.date}
-                      </span>
-                    </div>
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-serif-royal)',
+                        fontSize: '0.68rem',
+                        letterSpacing: '0.1em',
+                        color: 'var(--color-crimson)',
+                        textTransform: 'uppercase',
+                        fontWeight: 700,
+                      }}
+                    >
+                      {wish.relation}
+                    </span>
                   </div>
 
-                  {/* Heart / Like blessing button */}
-                  <button
-                    onClick={() => handleLike(wish.id)}
+                  <span
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      background: '#FAF2EF',
-                      border: '1.5px solid rgba(217, 131, 121, 0.5)',
-                      borderRadius: '20px',
-                      padding: '6px 14px',
-                      cursor: 'pointer',
-                      color: '#8C1D2F',
-                      fontSize: '0.85rem',
                       fontFamily: 'var(--font-sans)',
-                      fontWeight: 700,
-                      transition: 'transform 0.2s ease',
-                      flexShrink: 0,
+                      fontSize: '0.74rem',
+                      color: 'var(--color-gold-dark)',
+                      fontWeight: 600,
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                    aria-label={`Like wish from ${wish.name}`}
                   >
-                    <Heart size={14} fill="#8C1D2F" />
-                    <span>{wish.likes}</span>
-                  </button>
+                    {wish.date}
+                  </span>
                 </div>
 
-                {/* Full Blessing Message — Explicit Crisp Dark Maroon Text */}
+                {/* Message Body: Explicit Dark Contrast */}
                 <p
                   style={{
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '0.96rem',
+                    fontSize: '0.88rem',
                     color: '#2A0811',
-                    lineHeight: 1.65,
-                    fontStyle: 'italic',
-                    margin: 0,
-                    paddingTop: '10px',
-                    borderTop: '1px dashed rgba(201, 164, 92, 0.35)',
-                    wordBreak: 'break-word',
+                    lineHeight: 1.55,
+                    marginBottom: '12px',
+                    overflowWrap: 'break-word',
+                    wordBreak: 'normal',
                   }}
                 >
-                  "{wish.message}"
+                  {wish.message}
                 </p>
+
+                {/* Like Button & Gold Emblem */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    paddingTop: '8px',
+                    borderTop: '1px dashed rgba(201, 164, 92, 0.3)',
+                  }}
+                >
+                  <button
+                    onClick={() => handleLike(wish.id)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                      color: 'var(--color-crimson)',
+                      cursor: 'pointer',
+                      fontSize: '0.78rem',
+                      fontFamily: 'var(--font-sans)',
+                      fontWeight: 600,
+                      padding: '4px 8px',
+                      borderRadius: '12px',
+                      transition: 'background 0.2s ease',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#FAF0E6')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                  >
+                    <Heart size={13} fill="var(--color-crimson)" color="var(--color-crimson)" />
+                    <span>{wish.likes} Blessings</span>
+                  </button>
+
+                  <Sparkles size={13} color="var(--color-gold-bright)" />
+                </div>
               </div>
             ))}
           </div>

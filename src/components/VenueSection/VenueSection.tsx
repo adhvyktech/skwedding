@@ -1,304 +1,228 @@
 import React from 'react';
 import { weddingConfig } from '../../config/wedding';
 import { SectionDivider } from '../SectionDivider/SectionDivider';
-import { MapPin, Navigation, Compass, ExternalLink, Sparkles, Building2, Landmark } from 'lucide-react';
+import { MapPin, Navigation, Sparkles, Car } from 'lucide-react';
 
 export const VenueSection: React.FC = () => {
   const { venues, routeDistance } = weddingConfig.venueData;
 
   return (
     <section
-      id="venue"
+      id="venues"
       className="py-24 bg-personality-venue relative overflow-hidden"
       style={{
-        padding: '110px 24px',
+        padding: 'clamp(64px, 8vw, 110px) 0',
         position: 'relative',
         overflow: 'hidden',
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
-      <div className="section-container" style={{ maxWidth: '1240px', margin: '0 auto' }}>
+      <div className="section-container" style={{ maxWidth: '1160px' }}>
         {/* Section Header */}
         <div className="section-header">
-          <span className="section-eyebrow">DESTINATIONS & TRAVEL</span>
-          <h2 className="section-title">The Wedding Venues</h2>
+          <span className="section-eyebrow">DIRECTIONS & LOCATION</span>
+          <h2 className="section-title">Ceremonial Venues & Travel</h2>
           <p className="section-subtitle">
-            Guiding our esteemed family and friends to our celebration destinations in Hosur & Coimbatore.
+            Find directions to Saraswathi Mahal in Hosur and the Reception Venue in Coimbatore.
           </p>
         </div>
 
-        {/* Grand Travel Route & Venue Visual Container */}
+        {/* Route Travel Connection Bar */}
         <div
-          className="stationery-card gold-stationery-frame"
           style={{
-            borderRadius: '36px',
-            padding: 'clamp(28px, 4vw, 52px)',
-            marginBottom: '48px',
-            position: 'relative',
-            overflow: 'hidden',
-            backgroundColor: '#FAF6EE',
+            maxWidth: '640px',
+            margin: '0 auto clamp(24px, 4vw, 36px)',
+            backgroundColor: '#FAF2EF',
+            border: '1.5px solid rgba(217, 131, 121, 0.45)',
+            borderRadius: '24px',
+            padding: '10px 18px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px',
+            textAlign: 'center',
+            boxSizing: 'border-box',
           }}
         >
-          {/* Background Compass Watermark */}
-          <div
+          <Car size={16} color="var(--color-crimson)" style={{ flexShrink: 0 }} />
+          <span
             style={{
-              position: 'absolute',
-              top: '20px',
-              right: '20px',
-              opacity: 0.08,
-              color: 'var(--color-maroon)',
+              fontFamily: 'var(--font-sans)',
+              fontSize: 'clamp(0.78rem, 1.3vw, 0.88rem)',
+              color: '#3B0D18',
+              fontWeight: 600,
             }}
           >
-            <Compass size={180} />
-          </div>
+            {routeDistance}
+          </span>
+        </div>
 
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '36px',
-              position: 'relative',
-              zIndex: 2,
-            }}
-          >
-            {/* Travel Route Bar */}
+        {/* 2 Venue Cards: Stacks 1-col on Mobile, 2-col on Desktop */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+            gap: 'clamp(24px, 4vw, 36px)',
+            alignItems: 'stretch',
+            marginBottom: 'clamp(32px, 5vw, 48px)',
+            width: '100%',
+          }}
+        >
+          {venues.map((venue, idx) => (
             <div
+              key={idx}
+              className="stationery-card gold-stationery-frame hover-gold-glint"
               style={{
+                borderRadius: 'clamp(24px, 4vw, 36px)',
+                border: '2px solid rgba(201, 164, 92, 0.65)',
+                padding: 'clamp(24px, 4vw, 36px)',
+                backgroundColor: '#FAF6EE',
                 display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
+                flexDirection: 'column',
                 justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: '16px',
-                padding: '20px 26px',
-                borderRadius: '24px',
-                background: 'linear-gradient(135deg, #FFFDF9 0%, #F5EDE0 100%)',
-                border: '1.5px solid var(--color-gold)',
-                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.05)',
+                boxShadow: '0 16px 45px rgba(26, 5, 10, 0.5)',
+                width: '100%',
+                boxSizing: 'border-box',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <div>
+                {/* Top City Badge & Tag */}
                 <div
                   style={{
-                    width: '42px',
-                    height: '42px',
-                    borderRadius: '50%',
-                    backgroundColor: 'var(--color-maroon-dark)',
-                    color: '#FFFFFF',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: '0 4px 12px rgba(59, 13, 24, 0.3)',
+                    justifyContent: 'space-between',
+                    marginBottom: '16px',
                   }}
                 >
-                  <Navigation size={20} />
-                </div>
-                <div>
                   <span
                     style={{
                       fontFamily: 'var(--font-serif-royal)',
-                      fontSize: '0.85rem',
+                      fontSize: '0.72rem',
                       letterSpacing: '0.14em',
-                      color: 'var(--color-maroon-dark)',
+                      color: idx === 0 ? 'var(--color-crimson)' : 'var(--color-forest-rich)',
+                      backgroundColor: idx === 0 ? '#FAF0E6' : '#EAF3EE',
+                      border: `1px solid ${idx === 0 ? 'rgba(140, 29, 47, 0.35)' : 'rgba(22, 60, 42, 0.35)'}`,
+                      padding: '4px 12px',
+                      borderRadius: '16px',
                       fontWeight: 700,
-                      display: 'block',
+                      textTransform: 'uppercase',
                     }}
                   >
-                    CELEBRATION TRAIL
+                    {venue.tag}
                   </span>
+
                   <span
+                    style={{
+                      fontFamily: 'var(--font-serif-royal)',
+                      fontSize: '0.9rem',
+                      fontWeight: 700,
+                      color: 'var(--color-gold-dark)',
+                    }}
+                  >
+                    {venue.city.toUpperCase()}
+                  </span>
+                </div>
+
+                {/* Venue Name */}
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-serif-display)',
+                    fontSize: 'clamp(1.5rem, 3vw, 2.1rem)',
+                    color: '#3B0D18',
+                    lineHeight: 1.2,
+                    marginBottom: '8px',
+                  }}
+                >
+                  {venue.name}
+                </h3>
+
+                {/* Full Address */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '8px',
+                    marginBottom: '18px',
+                  }}
+                >
+                  <MapPin size={16} color="var(--color-crimson)" style={{ marginTop: '3px', flexShrink: 0 }} />
+                  <p
                     style={{
                       fontFamily: 'var(--font-sans)',
                       fontSize: '0.88rem',
                       color: 'var(--text-muted-on-light)',
+                      lineHeight: 1.5,
+                      margin: 0,
                     }}
                   >
-                    Hosur (12-13 Sep) ➔ Coimbatore (15 Sep)
-                  </span>
+                    {venue.address}
+                  </p>
                 </div>
-              </div>
 
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  backgroundColor: '#FFFFFF',
-                  padding: '8px 18px',
-                  borderRadius: '30px',
-                  border: '1.5px solid var(--color-gold)',
-                }}
-              >
-                <Sparkles size={15} color="var(--color-gold-dark)" />
-                <span
-                  style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.84rem',
-                    fontWeight: 600,
-                    color: 'var(--color-forest)',
-                  }}
-                >
-                  {routeDistance}
-                </span>
-              </div>
-            </div>
-
-            {/* Venues Grid (Equal Heights) */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                gap: '30px',
-                alignItems: 'stretch',
-              }}
-            >
-              {venues.map((venue, idx) => (
+                {/* Events Hosted List */}
                 <div
-                  key={venue.name}
                   style={{
                     backgroundColor: '#FFFDF9',
-                    borderRadius: '26px',
-                    border: '1.5px solid rgba(201, 164, 92, 0.45)',
-                    padding: '32px 26px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    transition: 'all 0.35s ease',
-                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--color-gold)';
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(201, 164, 92, 0.45)';
-                    e.currentTarget.style.transform = 'translateY(0)';
+                    borderRadius: '16px',
+                    border: '1px solid rgba(201, 164, 92, 0.35)',
+                    padding: '14px',
+                    marginBottom: '20px',
                   }}
                 >
-                  <div>
-                    {/* Top Row Tag & City */}
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        marginBottom: '16px',
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-serif-royal)',
-                          fontSize: '0.75rem',
-                          letterSpacing: '0.15em',
-                          fontWeight: 600,
-                          textTransform: 'uppercase',
-                          color: idx === 0 ? 'var(--color-crimson)' : 'var(--color-forest)',
-                          backgroundColor: idx === 0 ? '#FAF0E6' : '#EAF3EE',
-                          padding: '5px 14px',
-                          borderRadius: '16px',
-                          border: `1px solid ${idx === 0 ? 'rgba(140, 29, 47, 0.2)' : 'rgba(30, 78, 55, 0.2)'}`,
-                        }}
-                      >
-                        {venue.tag}
-                      </span>
-                      <div
-                        style={{
-                          width: '40px',
-                          height: '40px',
-                          borderRadius: '50%',
-                          backgroundColor: '#FAF6EE',
-                          border: '1.5px solid var(--color-gold)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          color: 'var(--color-gold-dark)',
-                        }}
-                      >
-                        {idx === 0 ? <Landmark size={20} /> : <Building2 size={20} />}
-                      </div>
-                    </div>
-
-                    <h3
-                      style={{
-                        fontFamily: 'var(--font-serif-display)',
-                        fontSize: '1.85rem',
-                        color: 'var(--color-maroon-dark)',
-                        lineHeight: 1.2,
-                        marginBottom: '8px',
-                      }}
-                    >
-                      {venue.name}
-                    </h3>
-
-                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '18px' }}>
-                      <MapPin size={18} color="var(--color-vermilion)" style={{ marginTop: '2px', flexShrink: 0 }} />
-                      <p
-                        style={{
-                          fontFamily: 'var(--font-sans)',
-                          fontSize: '0.9rem',
-                          color: 'var(--text-muted-on-light)',
-                          lineHeight: 1.5,
-                        }}
-                      >
-                        {venue.address}
-                      </p>
-                    </div>
-
-                    {/* Events Hosted Pill */}
-                    <div style={{ marginBottom: '28px' }}>
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-serif-royal)',
-                          fontSize: '0.74rem',
-                          letterSpacing: '0.14em',
-                          color: 'var(--color-maroon-dark)',
-                          fontWeight: 700,
-                          display: 'block',
-                          marginBottom: '10px',
-                        }}
-                      >
-                        EVENTS AT THIS VENUE:
-                      </span>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        {venue.eventsHosted.map((ev) => (
-                          <div
-                            key={ev}
-                            style={{
-                              backgroundColor: '#FAF6EE',
-                              padding: '8px 14px',
-                              borderRadius: '10px',
-                              border: '1px solid rgba(201, 164, 92, 0.3)',
-                              fontSize: '0.85rem',
-                              fontFamily: 'var(--font-sans)',
-                              color: 'var(--color-forest-rich)',
-                              fontWeight: 600,
-                            }}
-                          >
-                            • {ev}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Open in Google Maps Button */}
-                  <a
-                    href={venue.mapsQuery}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-maroon"
+                  <span
                     style={{
-                      width: '100%',
-                      height: '46px',
-                      fontSize: '0.86rem',
+                      fontFamily: 'var(--font-serif-royal)',
+                      fontSize: '0.68rem',
+                      letterSpacing: '0.14em',
+                      color: 'var(--color-gold-dark)',
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                      display: 'block',
+                      marginBottom: '8px',
                     }}
                   >
-                    <ExternalLink size={15} />
-                    <span>View Location on Maps</span>
-                  </a>
+                    EVENTS AT THIS VENUE:
+                  </span>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    {venue.eventsHosted.map((ev, i) => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Sparkles size={12} color="var(--color-crimson)" />
+                        <span
+                          style={{
+                            fontFamily: 'var(--font-sans)',
+                            fontSize: '0.84rem',
+                            fontWeight: 600,
+                            color: '#3B0D18',
+                          }}
+                        >
+                          {ev}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              {/* Get Directions Button */}
+              <a
+                href={venue.mapsQuery}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-maroon"
+                style={{
+                  width: '100%',
+                  height: '48px',
+                  fontSize: '0.86rem',
+                }}
+              >
+                <Navigation size={16} />
+                <span>Get Directions on Google Maps</span>
+              </a>
             </div>
-          </div>
+          ))}
         </div>
 
         <SectionDivider variant="gold" />

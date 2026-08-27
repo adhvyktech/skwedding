@@ -350,7 +350,7 @@ export const weddingConfig: WeddingConfig = {
         names: ['S. Ramprasad', 'R. Yasodha Devi'],
       },
       {
-        names: ['R. Prabhu Prasad', 'P. Vani Bai'],
+        names: ['Sekar Singh', 'Latha Bai'],
       },
       {
         names: ['R. Vithyasagar', 'K. Lakshmi'],

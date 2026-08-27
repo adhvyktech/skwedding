@@ -1,289 +1,260 @@
 import React, { useState, useEffect } from 'react';
 import { weddingConfig } from '../../config/wedding';
 import { ScratchCard } from '../ScratchCard/ScratchCard';
-import { Sparkles, Heart, RotateCcw } from 'lucide-react';
+import { SectionDivider } from '../SectionDivider/SectionDivider';
+import { Sparkles, Calendar, RotateCcw } from 'lucide-react';
 
-interface TimeLeft {
+interface TimeRemaining {
   days: number;
   hours: number;
   minutes: number;
   seconds: number;
-  isComplete: boolean;
+  isPast: boolean;
 }
 
-export const Countdown: React.FC = () => {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    isComplete: false,
-  });
+const STORAGE_SCRATCH_DATE_KEY = 'sk_wedding_date_scratched_v2';
 
-  const [hasRevealedDate, setHasRevealedDate] = useState<boolean>(() => {
+export const Countdown: React.FC = () => {
+  const targetDate = new Date(weddingConfig.countdown.targetDateIso).getTime();
+
+  const [hasScratchedDate, setHasScratchedDate] = useState<boolean>(() => {
     try {
-      return localStorage.getItem('wedding_date_revealed') === 'true';
+      return localStorage.getItem(STORAGE_SCRATCH_DATE_KEY) === 'true';
     } catch {
       return false;
     }
   });
 
+  const calculateTime = (): TimeRemaining => {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0, isPast: true };
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    return { days, hours, minutes, seconds, isPast: false };
+  };
+
+  const [time, setTime] = useState<TimeRemaining>(calculateTime);
+
   useEffect(() => {
-    const calculateTime = () => {
-      const target = new Date(weddingConfig.countdown.targetDateIso).getTime();
-      const now = new Date().getTime();
-      const difference = target - now;
+    const timer = setInterval(() => {
+      setTime(calculateTime());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [targetDate]);
 
-      if (difference <= 0) {
-        setTimeLeft({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-          isComplete: true,
-        });
-        return;
-      }
-
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((difference / 1000 / 60) % 60);
-      const seconds = Math.floor((difference / 1000) % 60);
-
-      setTimeLeft({ days, hours, minutes, seconds, isComplete: false });
-    };
-
-    calculateTime();
-    const interval = setInterval(calculateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleDateReveal = () => {
+  const handleDateRevealed = () => {
+    setHasScratchedDate(true);
     try {
-      localStorage.setItem('wedding_date_revealed', 'true');
+      localStorage.setItem(STORAGE_SCRATCH_DATE_KEY, 'true');
     } catch {
       // Ignore
     }
-    setHasRevealedDate(true);
   };
 
-  const handleReplayReveal = () => {
+  const handleResetDateScratch = () => {
+    setHasScratchedDate(false);
     try {
-      localStorage.removeItem('wedding_date_revealed');
+      localStorage.removeItem(STORAGE_SCRATCH_DATE_KEY);
     } catch {
       // Ignore
     }
-    setHasRevealedDate(false);
   };
 
-  const formatNumber = (num: number) => {
-    return num.toString().padStart(2, '0');
-  };
+  const pad = (n: number) => n.toString().padStart(2, '0');
 
   const timeUnits = [
-    { label: 'DAYS', value: formatNumber(timeLeft.days) },
-    { label: 'HOURS', value: formatNumber(timeLeft.hours) },
-    { label: 'MINUTES', value: formatNumber(timeLeft.minutes) },
-    { label: 'SECONDS', value: formatNumber(timeLeft.seconds) },
+    { label: 'DAYS', value: pad(time.days) },
+    { label: 'HOURS', value: pad(time.hours) },
+    { label: 'MINUTES', value: pad(time.minutes) },
+    { label: 'SECONDS', value: pad(time.seconds) },
   ];
 
   return (
     <section
       id="countdown"
-      className="py-24 bg-personality-countdown relative overflow-hidden text-center select-none"
+      className="py-24 bg-personality-countdown relative overflow-hidden"
       style={{
-        padding: '100px 24px',
+        padding: 'clamp(64px, 8vw, 110px) 0',
         position: 'relative',
         overflow: 'hidden',
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
-      <div className="section-container relative z-10" style={{ maxWidth: '1080px', margin: '0 auto' }}>
-        {/* Outer Grand Invitation Panel Card */}
-        <div
-          className="animate-shadow-breath"
-          style={{
-            backgroundColor: 'rgba(59, 13, 24, 0.85)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            border: '2px solid var(--color-gold)',
-            borderRadius: '40px',
-            padding: 'clamp(36px, 6vw, 64px) clamp(24px, 4vw, 48px)',
-            boxShadow: '0 25px 60px rgba(26, 5, 10, 0.6)',
-            position: 'relative',
-          }}
-        >
-          {/* Header */}
-          <div style={{ marginBottom: '36px' }}>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: 'rgba(201, 164, 92, 0.18)',
-                padding: '7px 20px',
-                borderRadius: '30px',
-                border: '1.5px solid var(--color-gold)',
-                marginBottom: '16px',
-              }}
+      <div className="section-container" style={{ maxWidth: '960px' }}>
+        {/* Section Header */}
+        <div className="section-header">
+          <span className="section-eyebrow">THE SACRED COUNTDOWN</span>
+          <h2 className="section-title">{weddingConfig.countdown.title}</h2>
+          <p className="section-subtitle">
+            Every passing moment brings us closer to the sacred Muhurtham in Hosur.
+          </p>
+        </div>
+
+        {/* Scratch-to-Reveal Date Card vs Live Countdown Timer */}
+        {!hasScratchedDate ? (
+          <div
+            style={{
+              maxWidth: '680px',
+              margin: '0 auto clamp(32px, 5vw, 48px)',
+              width: '100%',
+              boxSizing: 'border-box',
+            }}
+          >
+            <ScratchCard
+              minHeight={260}
+              title="REVEAL THE AUSPICIOUS DATE"
+              subtitle="Scratch 2-3 times to unlock the wedding date & live countdown"
+              onReveal={handleDateRevealed}
+              borderRadius={32}
             >
-              <Sparkles size={14} color="var(--color-gold-bright)" />
-              <span
+              {/* Card Revealed Content */}
+              <div
+                className="stationery-card gold-stationery-frame"
                 style={{
-                  fontFamily: 'var(--font-serif-royal)',
-                  fontSize: '0.78rem',
-                  letterSpacing: '0.2em',
-                  color: 'var(--color-gold-light)',
-                  textTransform: 'uppercase',
+                  padding: 'clamp(28px, 5vw, 44px) clamp(20px, 4vw, 36px)',
+                  textAlign: 'center',
+                  backgroundColor: '#FAF6EE',
+                  borderRadius: '32px',
+                  border: '2px solid var(--color-gold)',
                 }}
               >
-                AUSPICIOUS MUHURTHAM COUNTDOWN
-              </span>
-            </div>
-
-            <h2
-              style={{
-                fontFamily: 'var(--font-serif-display)',
-                fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)',
-                fontWeight: 400,
-                color: '#FFFDF9',
-                lineHeight: 1.2,
-                marginBottom: '10px',
-              }}
-            >
-              {weddingConfig.countdown.title}
-            </h2>
-
-            <p
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '1rem',
-                color: 'var(--color-gold-light)',
-                letterSpacing: '0.08em',
-              }}
-            >
-              {weddingConfig.countdown.subtitle}
-            </p>
-          </div>
-
-          {/* Date Scratch Reveal Stage OR Live Counter */}
-          {!hasRevealedDate ? (
-            <div style={{ maxWidth: '640px', margin: '0 auto 36px' }}>
-              <ScratchCard
-                minHeight={260}
-                title="A SACRED DATE HAS BEEN CHOSEN"
-                subtitle="Scratch to reveal the auspicious Muhurtham date & time"
-                borderRadius={28}
-                onReveal={handleDateReveal}
-              >
-                <div
-                  style={{
-                    backgroundColor: '#FAF6EE',
-                    borderRadius: '28px',
-                    border: '2px solid var(--color-gold)',
-                    padding: '36px 24px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '12px',
-                    boxShadow: '0 15px 35px rgba(0, 0, 0, 0.25)',
-                  }}
-                >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <Calendar size={18} color="var(--color-crimson)" />
                   <span
                     style={{
                       fontFamily: 'var(--font-serif-royal)',
-                      fontSize: '0.85rem',
+                      fontSize: '0.78rem',
                       letterSpacing: '0.2em',
                       color: 'var(--color-crimson)',
                       fontWeight: 700,
                     }}
                   >
-                    THE AUSPICIOUS MUHURTHAM
+                    THE SACRED DATE HAS BEEN CHOSEN
                   </span>
-                  <h3
-                    style={{
-                      fontFamily: 'var(--font-serif-display)',
-                      fontSize: '2.6rem',
-                      color: 'var(--color-maroon-dark)',
-                      lineHeight: 1.1,
-                      margin: 0,
-                    }}
-                  >
-                    13 September 2026
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: '1.05rem',
-                      fontWeight: 600,
-                      color: 'var(--color-forest-rich)',
-                    }}
-                  >
-                    4:20 AM – 6:20 AM (Brahma Muhurtham) • Saraswathi Mahal, Hosur
-                  </p>
                 </div>
-              </ScratchCard>
-            </div>
-          ) : (
-            <>
-              {/* 4 Time Digit Cards (Warm Ivory on Maroon) */}
+
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-serif-display)',
+                    fontSize: 'clamp(1.8rem, 4.5vw, 3rem)',
+                    color: '#3B0D18',
+                    lineHeight: 1.15,
+                    margin: '6px 0 10px',
+                  }}
+                >
+                  13 September 2026
+                </h3>
+
+                <p
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: 'clamp(0.85rem, 1.4vw, 1rem)',
+                    color: 'var(--color-gold-dark)',
+                    fontWeight: 600,
+                  }}
+                >
+                  4:20 AM – 6:20 AM IST • Saraswathi Mahal, Hosur
+                </p>
+              </div>
+            </ScratchCard>
+          </div>
+        ) : (
+          /* Live Countdown Container: 2x2 on Mobile, 4-in-a-row on Tablet/Desktop */
+          <div style={{ marginBottom: 'clamp(32px, 5vw, 48px)', width: '100%' }}>
+            <div
+              className="stationery-card gold-stationery-frame"
+              style={{
+                borderRadius: 'clamp(24px, 4vw, 36px)',
+                border: '2px solid rgba(201, 164, 92, 0.65)',
+                padding: 'clamp(24px, 4vw, 40px)',
+                backgroundColor: '#FAF6EE',
+                textAlign: 'center',
+                boxShadow: '0 20px 50px rgba(26, 5, 10, 0.6)',
+              }}
+            >
+              {/* Revealed Date Tag */}
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  backgroundColor: '#FAF2EF',
+                  border: '1.5px solid rgba(217, 131, 121, 0.4)',
+                  padding: '6px 18px',
+                  borderRadius: '30px',
+                  marginBottom: '20px',
+                }}
+              >
+                <Sparkles size={14} color="var(--color-crimson)" />
+                <span
+                  style={{
+                    fontFamily: 'var(--font-serif-royal)',
+                    fontSize: 'clamp(0.7rem, 1.2vw, 0.8rem)',
+                    letterSpacing: '0.14em',
+                    color: 'var(--color-crimson)',
+                    fontWeight: 700,
+                  }}
+                >
+                  {weddingConfig.countdown.targetDisplay}
+                </span>
+              </div>
+
+              {/* 2x2 Grid on Mobile, 4-col on Tablet/Desktop */}
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-                  gap: '20px',
-                  maxWidth: '820px',
-                  margin: '0 auto 32px',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 120px), 1fr))',
+                  gap: 'clamp(12px, 2.5vw, 20px)',
+                  maxWidth: '720px',
+                  margin: '0 auto 24px',
                 }}
               >
-                {timeUnits.map((unit) => (
+                {timeUnits.map((unit, idx) => (
                   <div
-                    key={unit.label}
-                    className="stationery-card animate-breathe"
+                    key={idx}
+                    className="hover-gold-glint"
                     style={{
-                      backgroundColor: '#FAF6EE',
-                      border: '1.5px solid var(--color-gold)',
-                      borderRadius: '24px',
-                      padding: '26px 14px',
+                      backgroundColor: '#FFFDF9',
+                      borderRadius: 'clamp(16px, 3vw, 24px)',
+                      border: '1.5px solid rgba(201, 164, 92, 0.45)',
+                      padding: 'clamp(16px, 3vw, 24px) clamp(10px, 2vw, 16px)',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: '0 12px 30px rgba(0, 0, 0, 0.3)',
-                      transition: 'all 0.3s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-4px)';
-                      e.currentTarget.style.borderColor = 'var(--color-gold-bright)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.borderColor = 'var(--color-gold)';
+                      boxShadow: '0 6px 18px rgba(0, 0, 0, 0.05)',
                     }}
                   >
-                    <div
-                      key={unit.value}
+                    <span
                       className="animate-number-roll"
                       style={{
                         fontFamily: 'var(--font-serif-display)',
-                        fontSize: 'clamp(2.8rem, 5.5vw, 4.2rem)',
+                        fontSize: 'clamp(2.2rem, 5.5vw, 3.8rem)',
                         fontWeight: 600,
+                        color: '#3B0D18',
                         lineHeight: 1,
-                        color: 'var(--color-maroon-dark)',
-                        marginBottom: '8px',
-                        fontVariantNumeric: 'tabular-nums',
+                        marginBottom: '4px',
                       }}
                     >
                       {unit.value}
-                    </div>
+                    </span>
                     <span
                       style={{
                         fontFamily: 'var(--font-serif-royal)',
-                        fontSize: '0.75rem',
-                        letterSpacing: '0.22em',
-                        color: 'var(--color-crimson)',
+                        fontSize: 'clamp(0.65rem, 1.1vw, 0.75rem)',
+                        letterSpacing: '0.18em',
+                        color: 'var(--color-gold-dark)',
+                        fontWeight: 700,
                         textTransform: 'uppercase',
-                        fontWeight: 600,
                       }}
                     >
                       {unit.label}
@@ -292,49 +263,34 @@ export const Countdown: React.FC = () => {
                 ))}
               </div>
 
-              {/* Replay Reveal Option */}
-              <div style={{ marginBottom: '24px' }}>
-                <button
-                  onClick={handleReplayReveal}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    color: 'var(--color-gold-light)',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.78rem',
-                    letterSpacing: '0.08em',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    cursor: 'pointer',
-                    opacity: 0.8,
-                    transition: 'opacity 0.2s ease',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.opacity = '1')}
-                  onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.8')}
-                >
-                  <RotateCcw size={13} />
-                  <span>Replay Date Scratch Reveal</span>
-                </button>
-              </div>
-            </>
-          )}
-
-          {/* Auspicious Blessing Quote */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', opacity: 0.95 }}>
-            <Heart size={15} color="var(--color-gold-bright)" fill="var(--color-gold-bright)" />
-            <span
-              style={{
-                fontFamily: 'var(--font-serif-display)',
-                fontSize: '1.1rem',
-                fontStyle: 'italic',
-                color: '#FFF9F0',
-              }}
-            >
-              "Every moment brings us closer to a lifetime of love and shared happiness."
-            </span>
+              {/* Replay Scratch Option */}
+              <button
+                onClick={handleResetDateScratch}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted-on-light)',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '0.78rem',
+                  fontFamily: 'var(--font-sans)',
+                  padding: '6px 12px',
+                  borderRadius: '20px',
+                  transition: 'color 0.2s ease',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-crimson)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted-on-light)')}
+              >
+                <RotateCcw size={13} />
+                <span>Replay Date Scratch Reveal</span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
+
+        <SectionDivider variant="gold" />
       </div>
     </section>
   );

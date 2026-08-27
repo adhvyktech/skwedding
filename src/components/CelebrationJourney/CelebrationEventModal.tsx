@@ -23,21 +23,24 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '16px',
+        padding: '12px',
         animation: 'fadeInScale 0.3s ease',
+        boxSizing: 'border-box',
+        overflowY: 'auto',
       }}
       onClick={onClose}
     >
-      {/* Modal Card Wrapper with strict viewport containment (NO vertical scroll needed) */}
+      {/* Modal Card Wrapper with strict viewport containment */}
       <div
         style={{
           width: '100%',
-          maxWidth: '740px',
-          maxHeight: 'min(90vh, 520px)',
+          maxWidth: '720px',
+          maxHeight: 'min(90vh, 560px)',
           position: 'relative',
-          borderRadius: '32px',
+          borderRadius: 'clamp(20px, 4vw, 32px)',
           overflow: 'hidden',
           boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7)',
+          margin: 'auto',
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -46,48 +49,45 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
           onClick={onClose}
           style={{
             position: 'absolute',
-            top: '12px',
-            right: '12px',
+            top: '10px',
+            right: '10px',
             zIndex: 30,
-            background: 'rgba(59, 13, 24, 0.9)',
+            background: 'rgba(59, 13, 24, 0.92)',
             border: '1.5px solid var(--color-gold)',
             borderRadius: '50%',
-            width: '38px',
-            height: '38px',
+            width: '36px',
+            height: '36px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             color: '#FFFFFF',
             cursor: 'pointer',
-            transition: 'all 0.2s ease',
             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--color-gold)')}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgba(59, 13, 24, 0.9)')}
           aria-label="Close Event Poster"
         >
-          <X size={18} />
+          <X size={16} />
         </button>
 
         {/* Scratch to Reveal Wrapper */}
         <ScratchCard
-          minHeight={380}
+          minHeight={340}
           title={`REVEAL ${event.name.toUpperCase()}`}
-          subtitle="Tap or scratch anywhere to reveal event details"
-          borderRadius={32}
+          subtitle="Scratch 2-3 times to unlock event poster"
+          borderRadius={28}
         >
-          {/* Revealed Miniature Wedding Poster with 2-Column Responsive Layout */}
+          {/* Revealed Miniature Wedding Poster */}
           <div
             className="stationery-card gold-stationery-frame"
             style={{
-              padding: 'clamp(20px, 3vw, 28px)',
+              padding: 'clamp(16px, 3.5vw, 28px)',
               backgroundColor: '#FAF6EE',
-              borderRadius: '32px',
+              borderRadius: 'clamp(20px, 4vw, 28px)',
               border: '2px solid var(--color-gold)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              maxHeight: 'min(90vh, 520px)',
+              maxHeight: 'min(90vh, 560px)',
               overflowY: 'auto',
               boxSizing: 'border-box',
             }}
@@ -96,29 +96,29 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: event.image ? 'repeat(auto-fit, minmax(220px, 1fr))' : '1fr',
-                gap: '20px',
+                gridTemplateColumns: event.image ? 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))' : '1fr',
+                gap: '16px',
                 alignItems: 'center',
-                marginBottom: '12px',
+                marginBottom: '10px',
               }}
             >
-              {/* Left Column: Event Image with Arched Border */}
+              {/* Event Image */}
               {event.image && (
                 <div
                   className="fine-art-photo-frame"
                   style={{
                     width: '100%',
-                    height: '180px',
-                    borderRadius: '20px',
+                    height: '160px',
+                    borderRadius: '18px',
                     overflow: 'hidden',
                     position: 'relative',
-                    border: '2px solid var(--color-gold-border)',
+                    border: '1.5px solid var(--color-gold-border)',
                   }}
                 >
                   <img
                     src={event.image}
                     alt={event.name}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 25%' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%' }}
                   />
                   <div
                     style={{
@@ -126,8 +126,8 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
                       bottom: 0,
                       left: 0,
                       right: 0,
-                      padding: '8px 12px',
-                      background: 'linear-gradient(to top, rgba(42, 8, 17, 0.85) 0%, transparent 100%)',
+                      padding: '6px 10px',
+                      background: 'linear-gradient(to top, rgba(42, 8, 17, 0.88) 0%, transparent 100%)',
                       color: '#FFFDF9',
                       display: 'flex',
                       alignItems: 'center',
@@ -137,7 +137,7 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
                     <span
                       style={{
                         fontFamily: 'var(--font-serif-royal)',
-                        fontSize: '0.68rem',
+                        fontSize: '0.65rem',
                         letterSpacing: '0.12em',
                         color: 'var(--color-gold-light)',
                       }}
@@ -147,7 +147,7 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
                     <span
                       style={{
                         fontFamily: 'var(--font-serif-royal)',
-                        fontSize: '1rem',
+                        fontSize: '0.95rem',
                         fontWeight: 700,
                         color: 'var(--color-gold-bright)',
                       }}
@@ -158,14 +158,14 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
                 </div>
               )}
 
-              {/* Right Column: Event Details */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {/* Event Details */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 <div>
                   <h3
                     style={{
                       fontFamily: 'var(--font-serif-display)',
-                      fontSize: 'clamp(1.5rem, 2.5vw, 1.95rem)',
-                      color: 'var(--color-maroon-dark)',
+                      fontSize: 'clamp(1.35rem, 2.5vw, 1.85rem)',
+                      color: '#3B0D18',
                       lineHeight: 1.15,
                       margin: 0,
                     }}
@@ -175,10 +175,9 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
                   <p
                     style={{
                       fontFamily: 'var(--font-sans)',
-                      fontSize: '0.8rem',
+                      fontSize: '0.78rem',
                       color: 'var(--color-gold-dark)',
                       fontWeight: 600,
-                      letterSpacing: '0.04em',
                       marginTop: '2px',
                     }}
                   >
@@ -186,35 +185,35 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
                   </p>
                 </div>
 
-                {/* Compact Schedule Info Box */}
+                {/* Schedule Info Box */}
                 <div
                   style={{
                     backgroundColor: '#FFFDF9',
-                    borderRadius: '16px',
+                    borderRadius: '14px',
                     border: '1px solid rgba(201, 164, 92, 0.35)',
-                    padding: '10px 14px',
+                    padding: '8px 12px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '6px',
+                    gap: '4px',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Calendar size={15} color="var(--color-crimson)" />
-                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.84rem', fontWeight: 600, color: 'var(--color-maroon-dark)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Calendar size={13} color="var(--color-crimson)" style={{ flexShrink: 0 }} />
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', fontWeight: 600, color: '#3B0D18' }}>
                       {event.dateDisplay}
                     </span>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Clock size={15} color="var(--color-forest)" />
-                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.84rem', fontWeight: 600, color: 'var(--color-forest-rich)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Clock size={13} color="var(--color-forest)" style={{ flexShrink: 0 }} />
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-forest-rich)' }}>
                       {event.timeDisplay}
                     </span>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                    <MapPin size={15} color="var(--color-vermilion)" style={{ marginTop: '2px', flexShrink: 0 }} />
-                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.82rem', color: 'var(--text-primary-on-light)' }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
+                    <MapPin size={13} color="var(--color-vermilion)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.78rem', color: 'var(--text-primary-on-light)' }}>
                       <strong>{event.venueName}</strong> • {event.venueAddress}
                     </span>
                   </div>
@@ -224,9 +223,9 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
                 <p
                   style={{
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '0.82rem',
+                    fontSize: '0.78rem',
                     color: 'var(--text-muted-on-light)',
-                    lineHeight: 1.45,
+                    lineHeight: 1.4,
                     margin: 0,
                   }}
                 >
@@ -241,25 +240,25 @@ export const CelebrationEventModal: React.FC<CelebrationEventModalProps> = ({ ev
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '8px',
-                paddingTop: '8px',
+                gap: '6px',
+                paddingTop: '6px',
                 borderTop: '1px dashed rgba(201, 164, 92, 0.35)',
               }}
             >
-              <Sparkles size={13} color="var(--color-gold-bright)" />
+              <Sparkles size={12} color="var(--color-gold-bright)" />
               <span
                 style={{
                   fontFamily: 'var(--font-serif-royal)',
-                  fontSize: '0.72rem',
+                  fontSize: '0.68rem',
                   letterSpacing: '0.12em',
                   color: 'var(--color-crimson)',
                   textTransform: 'uppercase',
                   fontWeight: 600,
                 }}
               >
-                Sarvesh & Keerthana Wedding Celebration
+                Sarvesh & Keerthana Wedding
               </span>
-              <Heart size={13} fill="var(--color-crimson)" color="var(--color-crimson)" />
+              <Heart size={12} fill="var(--color-crimson)" color="var(--color-crimson)" />
             </div>
           </div>
         </ScratchCard>

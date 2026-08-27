@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { weddingConfig } from '../../config/wedding';
 import { GalleryLightbox } from './GalleryLightbox';
 import { SectionDivider } from '../SectionDivider/SectionDivider';
-import { Eye, Sparkles } from 'lucide-react';
+import { Eye } from 'lucide-react';
 
 export const Gallery: React.FC = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -34,12 +34,14 @@ export const Gallery: React.FC = () => {
       id="gallery"
       className="py-24 bg-personality-gallery relative overflow-hidden"
       style={{
-        padding: '110px 24px',
+        padding: 'clamp(64px, 8vw, 110px) 0',
         position: 'relative',
         overflow: 'hidden',
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
-      <div className="section-container" style={{ maxWidth: '1280px', margin: '0 auto' }}>
+      <div className="section-container" style={{ maxWidth: '1280px' }}>
         {/* Section Header */}
         <div className="section-header">
           <span className="section-eyebrow">MOMENTS IN TIME</span>
@@ -49,185 +51,48 @@ export const Gallery: React.FC = () => {
           </p>
         </div>
 
-        {/* Asymmetric Magazine Gallery Grid with Living Motion */}
+        {/* Responsive Magazine Gallery Grid (2-col on Mobile/Tablet, 3/4-col on Desktop) */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(12, 1fr)',
-            gap: '24px',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
+            gap: 'clamp(16px, 2.5vw, 28px)',
             alignItems: 'stretch',
+            width: '100%',
           }}
         >
-          {/* Row 1: Item 1 (Spans 7 cols on desktop) */}
-          <div
-            className="col-span-12 lg:col-span-7 fine-art-photo-frame gold-stationery-frame cursor-pointer group hover-gold-glint"
-            data-cursor="view"
-            onClick={() => handleOpen(0)}
-            style={{
-              gridColumn: 'span 12',
-              borderRadius: '32px',
-              border: '2px solid rgba(201, 164, 92, 0.6)',
-              boxShadow: '0 20px 50px rgba(26, 5, 10, 0.6)',
-              aspectRatio: '16 / 11',
-              maxHeight: '520px',
-              position: 'relative',
-              cursor: 'pointer',
-              backgroundColor: '#FAF6EE',
-            }}
-          >
-            <img
-              src={photos[0].src}
-              alt={photos[0].alt}
-              className="animate-image-breath"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center 20%',
-              }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                padding: '24px',
-                background: 'linear-gradient(to top, rgba(42, 8, 17, 0.92) 0%, transparent 100%)',
-                color: '#FFFFFF',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'space-between',
-              }}
-            >
-              <div>
-                <h4 style={{ fontFamily: 'var(--font-serif-display)', fontSize: '1.5rem', color: '#FFFDF9', margin: 0 }}>
-                  {photos[0].title}
-                </h4>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.84rem', color: 'var(--color-gold-light)', margin: '2px 0 0' }}>
-                  {photos[0].subtitle}
-                </p>
-              </div>
-              <div
-                style={{
-                  background: 'rgba(59, 13, 24, 0.9)',
-                  border: '1.5px solid var(--color-gold)',
-                  borderRadius: '30px',
-                  padding: '6px 14px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  color: 'var(--color-gold-light)',
-                }}
-              >
-                <Eye size={14} />
-                <span style={{ fontFamily: 'var(--font-serif-royal)', fontSize: '0.7rem', letterSpacing: '0.1em', fontWeight: 600 }}>
-                  VIEW
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Row 1: Item 2 (Spans 5 cols on desktop, Floating Motion) */}
-          <div
-            className="col-span-12 lg:col-span-5 fine-art-photo-frame gold-stationery-frame cursor-pointer group hover-gold-glint animate-float-subtle"
-            data-cursor="view"
-            onClick={() => handleOpen(1)}
-            style={{
-              gridColumn: 'span 12',
-              borderRadius: '32px',
-              border: '2px solid rgba(201, 164, 92, 0.6)',
-              boxShadow: '0 20px 50px rgba(26, 5, 10, 0.6)',
-              aspectRatio: '4 / 5',
-              maxHeight: '520px',
-              position: 'relative',
-              cursor: 'pointer',
-              backgroundColor: '#FAF6EE',
-            }}
-          >
-            <img
-              src={photos[1].src}
-              alt={photos[1].alt}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center 15%',
-              }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                padding: '24px',
-                background: 'linear-gradient(to top, rgba(59, 13, 24, 0.92) 0%, transparent 100%)',
-                color: '#FFFFFF',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'space-between',
-              }}
-            >
-              <div>
-                <h4 style={{ fontFamily: 'var(--font-serif-display)', fontSize: '1.5rem', color: '#FFFDF9', margin: 0 }}>
-                  {photos[1].title}
-                </h4>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.84rem', color: 'var(--color-gold-light)', margin: '2px 0 0' }}>
-                  {photos[1].subtitle}
-                </p>
-              </div>
-              <div
-                style={{
-                  background: 'rgba(59, 13, 24, 0.9)',
-                  border: '1.5px solid var(--color-gold)',
-                  borderRadius: '30px',
-                  padding: '6px 14px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  color: 'var(--color-gold-light)',
-                }}
-              >
-                <Eye size={14} />
-                <span style={{ fontFamily: 'var(--font-serif-royal)', fontSize: '0.7rem', letterSpacing: '0.1em', fontWeight: 600 }}>
-                  VIEW
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Subsequent 8 Fine-Art Photographs (Each spans 4 columns / 3 per row on desktop) */}
-          {photos.slice(2).map((photo, idx) => (
+          {photos.map((photo, idx) => (
             <div
               key={photo.id}
-              className="col-span-12 md:col-span-6 lg:col-span-4 fine-art-photo-frame gold-stationery-frame cursor-pointer group hover-gold-glint"
+              className="fine-art-photo-frame gold-stationery-frame cursor-pointer group hover-gold-glint"
               data-cursor="view"
-              onClick={() => handleOpen(idx + 2)}
+              onClick={() => handleOpen(idx)}
               style={{
-                gridColumn: 'span 12',
-                borderRadius: '26px',
-                border: '1.5px solid rgba(201, 164, 92, 0.5)',
+                borderRadius: 'clamp(20px, 3vw, 28px)',
+                border: '1.5px solid rgba(201, 164, 92, 0.55)',
                 boxShadow: '0 16px 40px rgba(26, 5, 10, 0.5)',
-                aspectRatio: '3 / 4',
-                maxHeight: '460px',
+                aspectRatio: idx === 0 ? '4 / 5' : '3 / 4',
+                maxHeight: '480px',
                 position: 'relative',
                 cursor: 'pointer',
                 backgroundColor: '#FAF6EE',
-                transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                width: '100%',
+                boxSizing: 'border-box',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px) scale(1.015)';
+                e.currentTarget.style.transform = 'translateY(-4px)';
                 e.currentTarget.style.borderColor = 'var(--color-gold-bright)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'none';
-                e.currentTarget.style.borderColor = 'rgba(201, 164, 92, 0.5)';
+                e.currentTarget.style.borderColor = 'rgba(201, 164, 92, 0.55)';
               }}
             >
               <img
                 src={photo.src}
                 alt={photo.alt}
+                loading="lazy"
                 style={{
                   width: '100%',
                   height: '100%',
@@ -241,7 +106,7 @@ export const Gallery: React.FC = () => {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  padding: '18px 20px',
+                  padding: 'clamp(14px, 2vw, 20px)',
                   background: 'linear-gradient(to top, rgba(42, 8, 17, 0.92) 0%, transparent 100%)',
                   color: '#FFFFFF',
                   display: 'flex',
@@ -250,28 +115,30 @@ export const Gallery: React.FC = () => {
                 }}
               >
                 <div>
-                  <h4 style={{ fontFamily: 'var(--font-serif-display)', fontSize: '1.25rem', color: '#FFFDF9', margin: 0 }}>
+                  <h4 style={{ fontFamily: 'var(--font-serif-display)', fontSize: 'clamp(1.15rem, 2vw, 1.4rem)', color: '#FFFDF9', margin: 0 }}>
                     {photo.title}
                   </h4>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', color: 'var(--color-gold-light)', margin: '2px 0 0' }}>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.78rem', color: 'var(--color-gold-light)', margin: '2px 0 0' }}>
                     {photo.subtitle}
                   </p>
                 </div>
                 <div
                   style={{
-                    width: '34px',
-                    height: '34px',
-                    borderRadius: '50%',
-                    backgroundColor: 'rgba(59, 13, 24, 0.85)',
+                    background: 'rgba(59, 13, 24, 0.9)',
                     border: '1px solid var(--color-gold)',
+                    borderRadius: '20px',
+                    padding: '4px 10px',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
+                    gap: '4px',
                     color: 'var(--color-gold-light)',
                     flexShrink: 0,
                   }}
                 >
-                  <Sparkles size={15} />
+                  <Eye size={12} />
+                  <span style={{ fontFamily: 'var(--font-serif-royal)', fontSize: '0.65rem', letterSpacing: '0.1em', fontWeight: 600 }}>
+                    VIEW
+                  </span>
                 </div>
               </div>
             </div>
@@ -289,25 +156,6 @@ export const Gallery: React.FC = () => {
 
         <SectionDivider variant="gold" />
       </div>
-
-      <style>{`
-        @media (min-width: 768px) {
-          #gallery .md\\:col-span-6 {
-            grid-column: span 6 !important;
-          }
-        }
-        @media (min-width: 1024px) {
-          #gallery .lg\\:col-span-7 {
-            grid-column: span 7 !important;
-          }
-          #gallery .lg\\:col-span-5 {
-            grid-column: span 5 !important;
-          }
-          #gallery .lg\\:col-span-4 {
-            grid-column: span 4 !important;
-          }
-        }
-      `}</style>
     </section>
   );
 };

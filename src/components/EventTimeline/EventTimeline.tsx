@@ -9,12 +9,14 @@ export const EventTimeline: React.FC = () => {
       id="events"
       className="py-24 bg-personality-events relative overflow-hidden"
       style={{
-        padding: '110px 24px',
+        padding: 'clamp(64px, 8vw, 110px) 0',
         position: 'relative',
         overflow: 'hidden',
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
-      <div className="section-container" style={{ maxWidth: '1240px', margin: '0 auto' }}>
+      <div className="section-container" style={{ maxWidth: '1240px' }}>
         {/* Section Header */}
         <div className="section-header">
           <span className="section-eyebrow">CELEBRATION ITINERARY</span>
@@ -24,17 +26,18 @@ export const EventTimeline: React.FC = () => {
           </p>
         </div>
 
-        {/* 3 Event Cards Grid (Equal Heights) */}
+        {/* 3 Event Cards Grid (1-Col on Mobile, 3-Col on Desktop) */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '32px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+            gap: 'clamp(24px, 4vw, 36px)',
             alignItems: 'stretch',
+            width: '100%',
           }}
         >
           {weddingConfig.events.map((event, idx) => (
-            <div key={event.id} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <div key={event.id} style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
               <EventCard event={event} index={idx} />
             </div>
           ))}

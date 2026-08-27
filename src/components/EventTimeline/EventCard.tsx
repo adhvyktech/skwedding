@@ -17,8 +17,8 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
         return (
           <div
             style={{
-              width: '56px',
-              height: '56px',
+              width: '52px',
+              height: '52px',
               borderRadius: '50%',
               background: 'linear-gradient(135deg, #FAF0E6 0%, #F5EDE0 100%)',
               border: '2px solid #C9A45C',
@@ -27,17 +27,18 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
               justifyContent: 'center',
               color: '#8C1D2F',
               boxShadow: '0 4px 15px rgba(201, 164, 92, 0.25)',
+              flexShrink: 0,
             }}
           >
-            <Bell size={26} />
+            <Bell size={24} />
           </div>
         );
       case 'wedding_ceremony':
         return (
           <div
             style={{
-              width: '56px',
-              height: '56px',
+              width: '52px',
+              height: '52px',
               borderRadius: '50%',
               background: 'linear-gradient(135deg, #FDF3E5 0%, #F5DFBC 100%)',
               border: '2px solid #E1C98A',
@@ -46,9 +47,10 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
               justifyContent: 'center',
               color: '#561525',
               boxShadow: '0 0 20px rgba(201, 164, 92, 0.5)',
+              flexShrink: 0,
             }}
           >
-            <Flame size={28} />
+            <Flame size={26} />
           </div>
         );
       case 'reception_coimbatore':
@@ -56,8 +58,8 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
         return (
           <div
             style={{
-              width: '56px',
-              height: '56px',
+              width: '52px',
+              height: '52px',
               borderRadius: '50%',
               background: 'linear-gradient(135deg, #EAF3EE 0%, #D8E8DF 100%)',
               border: '2px solid #3E7D5A',
@@ -66,9 +68,10 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
               justifyContent: 'center',
               color: '#163C2A',
               boxShadow: '0 4px 15px rgba(62, 125, 90, 0.25)',
+              flexShrink: 0,
             }}
           >
-            <PartyPopper size={26} />
+            <PartyPopper size={24} />
           </div>
         );
     }
@@ -78,24 +81,28 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
     <div
       className="stationery-card gold-stationery-frame"
       style={{
-        borderRadius: '32px',
-        padding: '36px 30px',
+        borderRadius: 'clamp(24px, 4vw, 32px)',
+        padding: 'clamp(24px, 4vw, 36px) clamp(20px, 3.5vw, 30px)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: '100%',
         position: 'relative',
+        backgroundColor: '#FAF6EE',
+        border: '1.5px solid rgba(201, 164, 92, 0.55)',
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
       {/* Top Content Area */}
       <div>
         {/* Number & Icon Row */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '22px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
           <div>
             <span
               style={{
                 fontFamily: 'var(--font-serif-royal)',
-                fontSize: '1.4rem',
+                fontSize: '1.3rem',
                 fontWeight: 700,
                 color: 'var(--color-gold-dark)',
                 display: 'block',
@@ -108,9 +115,9 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
             <span
               style={{
                 fontFamily: 'var(--font-serif-royal)',
-                fontSize: '0.72rem',
-                letterSpacing: '0.18em',
-                fontWeight: 600,
+                fontSize: '0.7rem',
+                letterSpacing: '0.14em',
+                fontWeight: 700,
                 textTransform: 'uppercase',
                 color: event.colorScheme.accent,
                 background: event.colorScheme.tagBg,
@@ -130,8 +137,8 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
         <h3
           style={{
             fontFamily: 'var(--font-serif-display)',
-            fontSize: '2rem',
-            color: 'var(--color-maroon-dark)',
+            fontSize: 'clamp(1.6rem, 3vw, 2.1rem)',
+            color: '#3B0D18',
             lineHeight: 1.15,
             marginBottom: '6px',
           }}
@@ -142,11 +149,11 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
         <p
           style={{
             fontFamily: 'var(--font-sans)',
-            fontSize: '0.85rem',
+            fontSize: '0.84rem',
             fontWeight: 600,
             color: 'var(--color-gold-dark)',
             letterSpacing: '0.04em',
-            marginBottom: '20px',
+            marginBottom: '18px',
           }}
         >
           {event.subtitle}
@@ -157,34 +164,34 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
           style={{
             backgroundColor: '#FFFDF9',
             border: '1px solid rgba(201, 164, 92, 0.35)',
-            borderRadius: '20px',
-            padding: '18px',
-            marginBottom: '20px',
+            borderRadius: '18px',
+            padding: '16px',
+            marginBottom: '18px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '12px',
+            gap: '10px',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Calendar size={18} color="var(--color-crimson)" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Calendar size={16} color="var(--color-crimson)" style={{ flexShrink: 0 }} />
             <span
               style={{
                 fontFamily: 'var(--font-sans)',
-                fontSize: '0.95rem',
+                fontSize: '0.92rem',
                 fontWeight: 600,
-                color: 'var(--color-maroon-dark)',
+                color: '#3B0D18',
               }}
             >
               {event.dateDisplay}
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Clock size={18} color="var(--color-forest)" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Clock size={16} color="var(--color-forest)" style={{ flexShrink: 0 }} />
             <span
               style={{
                 fontFamily: 'var(--font-sans)',
-                fontSize: '0.92rem',
+                fontSize: '0.9rem',
                 color: 'var(--color-forest-rich)',
                 fontWeight: 600,
               }}
@@ -193,15 +200,15 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-            <MapPin size={18} color="var(--color-vermilion)" style={{ marginTop: '2px', flexShrink: 0 }} />
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+            <MapPin size={16} color="var(--color-vermilion)" style={{ marginTop: '2px', flexShrink: 0 }} />
             <div>
               <span
                 style={{
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '0.92rem',
+                  fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: 'var(--text-primary-on-light)',
+                  color: '#3B0D18',
                   display: 'block',
                 }}
               >
@@ -210,7 +217,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
               <span
                 style={{
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '0.82rem',
+                  fontSize: '0.8rem',
                   color: 'var(--text-muted-on-light)',
                 }}
               >
@@ -224,34 +231,34 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
         <p
           style={{
             fontFamily: 'var(--font-sans)',
-            fontSize: '0.9rem',
+            fontSize: '0.86rem',
             color: 'var(--text-muted-on-light)',
             lineHeight: 1.55,
-            marginBottom: '28px',
+            marginBottom: '24px',
           }}
         >
           {event.description}
         </p>
       </div>
 
-      {/* Bottom Button Group: Structurally Anchored for Perfect Desktop Alignment */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: 'auto' }}>
+      {/* Bottom Button Group */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: 'auto', width: '100%' }}>
         {/* Add to Calendar Dropdown */}
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', width: '100%' }}>
           <button
             onClick={() => setCalendarMenuOpen(!calendarMenuOpen)}
             className="btn-secondary"
             style={{
               width: '100%',
               backgroundColor: 'rgba(59, 13, 24, 0.08)',
-              color: 'var(--color-maroon-dark)',
+              color: '#3B0D18',
               borderColor: 'var(--color-gold)',
               justifyContent: 'space-between',
               height: '46px',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Calendar size={16} color="var(--color-crimson)" />
+              <Calendar size={15} color="var(--color-crimson)" />
               <span>Add to Calendar</span>
             </div>
             <Sparkles size={14} color="var(--color-gold-dark)" />
@@ -287,16 +294,13 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
                   padding: '10px 14px',
                   borderRadius: '10px',
                   textDecoration: 'none',
-                  color: 'var(--color-maroon-dark)',
+                  color: '#3B0D18',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '0.88rem',
+                  fontSize: '0.86rem',
                   fontWeight: 600,
-                  transition: 'background 0.2s ease',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#FAF6EE')}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
               >
-                <ExternalLink size={15} color="var(--color-forest)" />
+                <ExternalLink size={14} color="var(--color-forest)" />
                 <span>Google Calendar</span>
               </a>
 
@@ -316,16 +320,13 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
                   width: '100%',
                   textAlign: 'left',
                   cursor: 'pointer',
-                  color: 'var(--color-maroon-dark)',
+                  color: '#3B0D18',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '0.88rem',
+                  fontSize: '0.86rem',
                   fontWeight: 600,
-                  transition: 'background 0.2s ease',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#FAF6EE')}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
               >
-                <Download size={15} color="var(--color-crimson)" />
+                <Download size={14} color="var(--color-crimson)" />
                 <span>Apple / Outlook (.ics file)</span>
               </button>
             </div>
@@ -341,7 +342,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index }) => {
           style={{
             width: '100%',
             height: '46px',
-            fontSize: '0.86rem',
+            fontSize: '0.84rem',
           }}
         >
           <MapPin size={15} />

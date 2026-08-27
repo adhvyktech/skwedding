@@ -3,252 +3,259 @@ import { weddingConfig } from '../../config/wedding';
 import type { CelebrationEvent } from '../../config/wedding';
 import { CelebrationEventModal } from './CelebrationEventModal';
 import { SectionDivider } from '../SectionDivider/SectionDivider';
-import { Sparkles, Flower, Music, Flame, HeartHandshake, PartyPopper, Crown, Eye } from 'lucide-react';
+import { Sparkles, Calendar, Clock, MapPin, Eye } from 'lucide-react';
 
 export const CelebrationJourney: React.FC = () => {
   const [selectedEvent, setSelectedEvent] = useState<CelebrationEvent | null>(null);
 
-  const getIcon = (name: string, color: string) => {
-    switch (name) {
-      case 'Sparkles':
-        return <Sparkles size={22} color={color} />;
-      case 'Flower':
-        return <Flower size={22} color={color} />;
-      case 'Music':
-        return <Music size={22} color={color} />;
-      case 'Flame':
-        return <Flame size={22} color={color} />;
-      case 'PartyPopper':
-        return <PartyPopper size={22} color={color} />;
-      case 'Crown':
-        return <Crown size={22} color={color} />;
-      case 'HeartHandshake':
-      default:
-        return <HeartHandshake size={22} color={color} />;
-    }
-  };
+  const events = weddingConfig.celebrationJourney;
 
   return (
     <section
       id="celebrations"
       className="py-24 bg-personality-story relative overflow-hidden"
       style={{
-        padding: '110px 24px',
+        padding: 'clamp(64px, 8vw, 110px) 0',
         position: 'relative',
         overflow: 'hidden',
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
-      <div className="section-container" style={{ maxWidth: '1120px', margin: '0 auto' }}>
+      <div className="section-container" style={{ maxWidth: '1240px' }}>
         {/* Section Header */}
         <div className="section-header">
-          <span className="section-eyebrow">A SACRED ITINERARY OF JOY</span>
-          <h2 className="section-title">The Celebration Journey</h2>
+          <span className="section-eyebrow">THE AUSPICIOUS CELEBRATION JOURNEY</span>
+          <h2 className="section-title">Rituals, Festivities & Sacred Moments</h2>
           <p className="section-subtitle">
-            A cherished visual anthology of our wedding rituals and gatherings. Tap any celebration card to scratch and reveal its sealed details.
+            From fragrant turmeric rituals to the eternal Muhurtham vows, explore the ceremonies uniting Sarvesh & Keerthana.
           </p>
         </div>
 
-        {/* Timeline Journey Container */}
-        <div style={{ position: 'relative', maxWidth: '920px', margin: '0 auto' }}>
-          {/* Central Gold Timeline Line */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '40px',
-              bottom: '40px',
-              left: '50%',
-              width: '2px',
-              transform: 'translateX(-50%)',
-              background: 'linear-gradient(180deg, rgba(201, 164, 92, 0.3) 0%, rgba(225, 201, 138, 0.85) 30%, rgba(201, 164, 92, 0.85) 70%, rgba(201, 164, 92, 0.3) 100%)',
-            }}
-          />
-
-          {/* Celebration Event Cards */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '56px' }}>
-            {weddingConfig.celebrationJourney.map((event, idx) => {
-              const isEven = idx % 2 === 0;
-              const motionClass =
-                idx % 3 === 0 ? 'animate-breathe' : idx % 3 === 1 ? 'animate-float-subtle' : 'animate-shadow-breath';
-
-              return (
+        {/* Responsive Events Grid (1-Col on Mobile, 2-Col on Tablet, 3-Col on Desktop) */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+            gap: 'clamp(20px, 3.5vw, 32px)',
+            marginBottom: 'clamp(32px, 5vw, 48px)',
+            width: '100%',
+          }}
+        >
+          {events.map((event) => (
+            <div
+              key={event.id}
+              onClick={() => setSelectedEvent(event)}
+              className="stationery-card gold-stationery-frame cursor-pointer group hover-gold-glint"
+              style={{
+                borderRadius: 'clamp(24px, 4vw, 32px)',
+                border: '1.5px solid rgba(201, 164, 92, 0.55)',
+                padding: 'clamp(22px, 3.5vw, 30px)',
+                backgroundColor: '#FAF6EE',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                cursor: 'pointer',
+                boxShadow: '0 12px 35px rgba(26, 5, 10, 0.45)',
+                transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                width: '100%',
+                boxSizing: 'border-box',
+              }}
+            >
+              <div>
+                {/* Top Number & Badge Row */}
                 <div
-                  key={event.id}
-                  className="flex flex-col md:flex-row items-center"
                   style={{
                     display: 'flex',
-                    flexDirection: isEven ? 'row' : 'row-reverse',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    position: 'relative',
-                    width: '100%',
+                    marginBottom: '16px',
                   }}
                 >
-                  {/* Miniature Sealed Invitation Card */}
-                  <div
-                    className={`stationery-card gold-stationery-frame cursor-pointer ${motionClass}`}
-                    onClick={() => setSelectedEvent(event)}
+                  <span
                     style={{
-                      width: '100%',
-                      maxWidth: '400px',
-                      padding: '30px 24px',
-                      borderRadius: '28px',
-                      textAlign: isEven ? 'right' : 'left',
-                      zIndex: 2,
-                      cursor: 'pointer',
-                      border: '1.5px solid rgba(201, 164, 92, 0.45)',
-                      backgroundColor: '#FAF6EE',
-                      transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'var(--color-gold-bright)';
-                      e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(201, 164, 92, 0.45)';
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      fontFamily: 'var(--font-serif-royal)',
+                      fontSize: '1.25rem',
+                      fontWeight: 700,
+                      color: 'var(--color-gold-bright)',
+                      textShadow: '0 0 10px rgba(201, 164, 92, 0.3)',
                     }}
                   >
-                    {/* Top Badge & Number */}
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: isEven ? 'flex-end' : 'flex-start',
-                        gap: '10px',
-                        marginBottom: '10px',
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-serif-royal)',
-                          fontSize: '0.72rem',
-                          letterSpacing: '0.18em',
-                          fontWeight: 600,
-                          textTransform: 'uppercase',
-                          color: event.colorScheme.accent,
-                          background: event.colorScheme.tagBg,
-                          padding: '4px 12px',
-                          borderRadius: '14px',
-                          border: `1px solid ${event.colorScheme.border}`,
-                        }}
-                      >
-                        {event.badge}
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-serif-royal)',
-                          fontSize: '1.15rem',
-                          fontWeight: 700,
-                          color: 'var(--color-gold-dark)',
-                        }}
-                      >
-                        {event.number}
-                      </span>
-                    </div>
+                    {event.number}
+                  </span>
 
-                    <h3
-                      style={{
-                        fontFamily: 'var(--font-serif-display)',
-                        fontSize: '1.85rem',
-                        color: 'var(--color-maroon-dark)',
-                        lineHeight: 1.2,
-                        marginBottom: '4px',
-                      }}
-                    >
-                      {event.name}
-                    </h3>
-
-                    <p
-                      style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.82rem',
-                        fontWeight: 600,
-                        color: 'var(--color-gold-dark)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.06em',
-                        marginBottom: '12px',
-                      }}
-                    >
-                      {event.subtitle}
-                    </p>
-
-                    <p
-                      style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.9rem',
-                        color: 'var(--text-muted-on-light)',
-                        lineHeight: 1.55,
-                        marginBottom: '16px',
-                      }}
-                    >
-                      {event.description}
-                    </p>
-
-                    {/* Scratch to Reveal Action Badge */}
-                    <div
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        backgroundColor: '#FFFDF9',
-                        padding: '7px 16px',
-                        borderRadius: '20px',
-                        border: '1.5px solid var(--color-gold)',
-                        boxShadow: '0 4px 12px rgba(201, 164, 92, 0.2)',
-                      }}
-                    >
-                      <Sparkles size={14} color="var(--color-crimson)" />
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-serif-royal)',
-                          fontSize: '0.74rem',
-                          letterSpacing: '0.12em',
-                          fontWeight: 700,
-                          color: 'var(--color-maroon-dark)',
-                        }}
-                      >
-                        SCRATCH TO REVEAL DETAILS
-                      </span>
-                      <Eye size={13} color="var(--color-gold-dark)" />
-                    </div>
-                  </div>
-
-                  {/* Central Node Badge */}
-                  <div
-                    onClick={() => setSelectedEvent(event)}
+                  <span
                     style={{
-                      width: '52px',
-                      height: '52px',
-                      borderRadius: '50%',
-                      backgroundColor: '#561525',
-                      border: '2px solid var(--color-gold-bright)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 0 20px rgba(201, 164, 92, 0.55)',
-                      zIndex: 5,
-                      margin: '20px',
-                      cursor: 'pointer',
-                      flexShrink: 0,
-                      transition: 'transform 0.3s ease',
+                      fontFamily: 'var(--font-serif-royal)',
+                      fontSize: '0.68rem',
+                      letterSpacing: '0.12em',
+                      color: event.isConfirmed ? 'var(--color-crimson)' : 'var(--color-forest)',
+                      backgroundColor: event.colorScheme.tagBg,
+                      border: `1px solid ${event.colorScheme.border}`,
+                      padding: '4px 12px',
+                      borderRadius: '20px',
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                    title="Tap to unlock event details"
                   >
-                    {getIcon(event.iconName, 'var(--color-gold-bright)')}
-                  </div>
-
-                  {/* Spacer for desktop layout balance */}
-                  <div className="hidden md:block" style={{ width: '100%', maxWidth: '400px' }} />
+                    {event.badge}
+                  </span>
                 </div>
-              );
-            })}
-          </div>
+
+                {/* Event Photo if available */}
+                {event.image && (
+                  <div
+                    className="fine-art-photo-frame"
+                    style={{
+                      aspectRatio: '16 / 9',
+                      maxHeight: '180px',
+                      borderRadius: 'clamp(16px, 2.5vw, 20px)',
+                      marginBottom: '16px',
+                      border: '1.5px solid var(--color-gold-border)',
+                    }}
+                  >
+                    <img
+                      src={event.image}
+                      alt={event.name}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center 20%',
+                      }}
+                    />
+                  </div>
+                )}
+
+                {/* Event Name & Subtitle */}
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-serif-display)',
+                    fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)',
+                    color: '#3B0D18',
+                    lineHeight: 1.2,
+                    margin: '0 0 4px',
+                  }}
+                >
+                  {event.name}
+                </h3>
+
+                <p
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '0.82rem',
+                    color: 'var(--color-gold-dark)',
+                    fontWeight: 600,
+                    marginBottom: '14px',
+                  }}
+                >
+                  {event.subtitle}
+                </p>
+
+                {/* Schedule Info Box */}
+                <div
+                  style={{
+                    backgroundColor: '#FFFDF9',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(201, 164, 92, 0.35)',
+                    padding: '12px 14px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '6px',
+                    marginBottom: '14px',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Calendar size={14} color="var(--color-crimson)" style={{ flexShrink: 0 }} />
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.82rem', fontWeight: 600, color: '#3B0D18' }}>
+                      {event.dateDisplay}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Clock size={14} color="var(--color-forest)" style={{ flexShrink: 0 }} />
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.82rem', fontWeight: 600, color: 'var(--color-forest-rich)' }}>
+                      {event.timeDisplay}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                    <MapPin size={14} color="var(--color-vermilion)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', color: 'var(--text-primary-on-light)' }}>
+                      <strong>{event.venueName}</strong> • {event.venueAddress}
+                    </span>
+                  </div>
+                </div>
+
+                <p
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '0.84rem',
+                    color: 'var(--text-muted-on-light)',
+                    lineHeight: 1.5,
+                    margin: 0,
+                  }}
+                >
+                  {event.description}
+                </p>
+              </div>
+
+              {/* Bottom Action: Reveal Poster Trigger */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginTop: '18px',
+                  paddingTop: '12px',
+                  borderTop: '1px dashed rgba(201, 164, 92, 0.35)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <Sparkles size={13} color="var(--color-gold-bright)" />
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-serif-royal)',
+                      fontSize: '0.68rem',
+                      letterSpacing: '0.12em',
+                      color: 'var(--color-crimson)',
+                      fontWeight: 600,
+                    }}
+                  >
+                    SEALED INVITATION
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    backgroundColor: '#FAF2EF',
+                    border: '1px solid var(--color-gold)',
+                    borderRadius: '20px',
+                    padding: '5px 12px',
+                    fontSize: '0.72rem',
+                    fontFamily: 'var(--font-sans)',
+                    fontWeight: 700,
+                    color: 'var(--color-crimson)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Eye size={12} />
+                  <span>Scratch Poster</span>
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Scratch-to-Reveal Poster Modal */}
-        <CelebrationEventModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+        {/* Event Scratch Modal */}
+        <CelebrationEventModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+        />
 
         <SectionDivider variant="gold" />
       </div>
