@@ -1,0 +1,82 @@
+:root {
+  /* =========================================================
+     Royal South Indian Wedding Color System
+     Deep Maroon, Wine, Burgundy, Champagne Gold & Warm Ivory
+     ========================================================= */
+
+  /* Deep Maroon & Wine Background System (NO BLACK) */
+  --bg-maroon-deep: #2A0811;
+  --bg-maroon-dark: #3B0D18;
+  --bg-maroon-rich: #4A101D;
+  --bg-maroon-wine: #561525;
+  --bg-maroon-soft: #651A2A;
+  --bg-maroon-glow: #782236;
+
+  /* Aliased Maroon Color Tokens */
+  --color-maroon-deep: #2A0811;
+  --color-maroon-dark: #3B0D18;
+  --color-maroon-rich: #4A101D;
+  --color-maroon-wine: #561525;
+
+  /* Luxury Invitation Stationery Surfaces (Warm Ivory / Cream) */
+  --color-ivory: #FAF6EE;
+  --color-ivory-light: #FFFDF9;
+  --color-ivory-warm: #F5EFE4;
+  --color-cream: #FFF9F0;
+  --color-parchment: #F2E8DA;
+
+  /* Champagne & Antique Gold Ornamentation ("Foil & Jigina") */
+  --color-gold: #C9A45C;
+  --color-gold-light: #D8BC7A;
+  --color-gold-bright: #E1C98A;
+  --color-gold-shimmer: #F5E6BE;
+  --color-gold-dark: #A8833B;
+  --color-gold-border: rgba(201, 164, 92, 0.45);
+  --color-gold-glow: rgba(201, 164, 92, 0.25);
+
+  /* Traditional Florals & Sacred Accents */
+  --color-crimson: #8C1D2F;
+  --color-vermilion: #B8332E;
+  --color-rose-deep: #B5524B;
+  --color-rose-soft: #E3938B;
+  --color-blush: #F7EAE6;
+  --color-marigold: #EAA838;
+  --color-jasmine: #FFFDF5;
+
+  /* South Indian Natural Green Accents */
+  --color-forest: #163C2A;
+  --color-forest-rich: #1E4E37;
+  --color-leaf: #2B6B4D;
+  --color-sage: #5A7E6B;
+  --color-sage-light: #EBF3EE;
+
+  /* Rich Typography Colors */
+  --text-primary-on-dark: #FFFDF9;
+  --text-secondary-on-dark: #EAD8B1;
+  --text-muted-on-dark: #D4BFA7;
+  --text-primary-on-light: #3B0D18;
+  --text-secondary-on-light: #5A1624;
+  --text-muted-on-light: #6E5C58;
+
+  /* Typography System */
+  --font-serif-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-serif-royal: 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-script: 'Alex Brush', 'Pinyon Script', cursive;
+
+  /* Refined Elevation & Ceremonial Shadows */
+  --shadow-card: 0 16px 40px rgba(42, 8, 17, 0.35);
+  --shadow-card-hover: 0 24px 50px rgba(42, 8, 17, 0.45);
+  --shadow-gold: 0 8px 25px rgba(201, 164, 92, 0.3);
+  --shadow-photo: 0 20px 45px rgba(26, 5, 10, 0.5);
+
+  /* Organic Curves */
+  --radius-sm: 14px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-xl: 36px;
+  --radius-full: 9999px;
+
+  /* Smooth Easing */
+  --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+}

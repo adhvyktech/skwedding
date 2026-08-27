@@ -1,0 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import './variables.css';
+@import './animations.css';
+
+/* =========================================================
+   Universal Reset & Global Maroon Canvas
+   ========================================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-maroon-dark);
+  color: var(--text-primary-on-dark);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  background-color: var(--bg-maroon-dark);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(120, 34, 54, 0.35) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(86, 21, 37, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 90% 70%, rgba(101, 26, 42, 0.35) 0%, transparent 50%);
+  color: var(--text-primary-on-dark);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Custom Gold Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-maroon-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-light);
+}
+
+/* =========================================================
+   Typography Utilities
+   ========================================================= */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.font-serif {
+  font-family: var(--font-serif-display);
+}
+
+.font-royal {
+  font-family: var(--font-serif-royal);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.font-script {
+  font-family: var(--font-script);
+  font-weight: 400;
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Section Grid & Container */
+.section-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .section-container {
+    padding: 0 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .section-container {
+    padding: 0 48px;
+  }
+}
+
+/* Section Header Typography */
+.section-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.section-eyebrow {
+  font-family: var(--font-serif-royal);
+  font-size: 0.82rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.section-title {
+  font-family: var(--font-serif-display);
+  font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #FFFDF9;
+  margin-bottom: 14px;
+}
+
+.section-title-dark {
+  color: var(--text-primary-on-light);
+}
+
+.section-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  color: var(--text-secondary-on-dark);
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.section-subtitle-dark {
+  color: var(--text-muted-on-light);
+}
+
+/* =========================================================
+   Unified Luxury Button System (Equal heights & consistent alignment)
+   ========================================================= */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0 28px;
+  background: linear-gradient(135deg, var(--color-gold-bright) 0%, var(--color-gold) 100%);
+  color: #2A0811;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-gold-light);
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(201, 164, 92, 0.35);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(201, 164, 92, 0.5);
+  background: linear-gradient(135deg, #FFF9F0 0%, var(--color-gold-light) 100%);
+  color: #1A050A;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0 26px;
+  background: rgba(59, 13, 24, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--color-gold-light);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-gold);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  background: rgba(201, 164, 92, 0.15);
+  border-color: var(--color-gold-bright);
+  color: #FFFDF9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 164, 92, 0.25);
+}
+
+.btn-maroon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0 28px;
+  background: linear-gradient(135deg, #561525 0%, #3B0D18 100%);
+  color: #FFFDF9;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-gold);
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(59, 13, 24, 0.4);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-maroon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(201, 164, 92, 0.4);
+  background: linear-gradient(135deg, #651A2A 0%, #4A101D 100%);
+  border-color: var(--color-gold-bright);
+}
+
+/* =========================================================
+   Luxury Wedding Stationery Card System
+   ========================================================= */
+
+.stationery-card {
+  background: var(--color-ivory);
+  color: var(--text-primary-on-light);
+  border: 1px solid var(--color-gold-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stationery-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-gold);
+  transform: translateY(-4px);
+}
+
+/* Elegant Curved Section Top / Bottom transitions */
+.curved-section {
+  border-radius: 40px;
+}
+
+@media (min-width: 768px) {
+  .curved-section {
+    border-radius: 56px;
+  }
+}
+
+/* Gold Ornamental Border Inset */
+.gold-stationery-frame {
+  position: relative;
+}
+
+.gold-stationery-frame::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(201, 164, 92, 0.35);
+  border-radius: calc(var(--radius-lg) - 8px);
+  pointer-events: none;
+  transition: border-color 0.4s ease;
+}
+
+.gold-stationery-frame:hover::before {
+  border-color: rgba(201, 164, 92, 0.65);
+}
+
+/* Fine Art Framed Photography */
+.fine-art-photo-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-ivory-warm);
+  border: 2px solid var(--color-gold-border);
+  box-shadow: var(--shadow-photo);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+}
+
+.fine-art-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fine-art-photo-frame:hover {
+  border-color: var(--color-gold);
+  transform: translateY(-3px);
+}
+
+.fine-art-photo-frame:hover img {
+  transform: scale(1.03);
+}
+
+/* =========================================================
+   Section Background Personalities (Rich Maroon & Wine System)
+   ========================================================= */
+
+.bg-personality-hero {
+  background: radial-gradient(circle at 50% 30%, #561525 0%, #3B0D18 55%, #2A0811 100%);
+}
+
+.bg-personality-couple {
+  background: radial-gradient(circle at 50% 20%, #4A101D 0%, #3B0D18 70%, #2A0811 100%);
+}
+
+.bg-personality-countdown {
+  background: radial-gradient(circle at 50% 50%, #561525 0%, #3B0D18 60%, #20050D 100%);
+}
+
+.bg-personality-story {
+  background: radial-gradient(circle at 50% 40%, #4A101D 0%, #3B0D18 70%, #2A0811 100%);
+}
+
+.bg-personality-events {
+  background: radial-gradient(circle at 50% 30%, #561525 0%, #3B0D18 60%, #2A0811 100%);
+}
+
+.bg-personality-family {
+  background: radial-gradient(circle at 50% 40%, #4A101D 0%, #3B0D18 70%, #2A0811 100%);
+}
+
+.bg-personality-gallery {
+  background: radial-gradient(circle at 50% 30%, #561525 0%, #3B0D18 65%, #20050D 100%);
+}
+
+.bg-personality-venue {
+  background: radial-gradient(circle at 50% 40%, #4A101D 0%, #2E0B14 70%, #1A050A 100%);
+}
+
+.bg-personality-rsvp {
+  background: radial-gradient(circle at 50% 30%, #561525 0%, #3B0D18 65%, #2A0811 100%);
+}
+
+.bg-personality-wishes {
+  background: radial-gradient(circle at 50% 40%, #4A101D 0%, #3B0D18 70%, #2A0811 100%);
+}
+
+.bg-personality-footer {
+  background: radial-gradient(circle at 50% 40%, #2A0811 0%, #1A040A 100%);
+}

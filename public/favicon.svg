@@ -1,0 +1,8 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="46" fill="#681724" stroke="#C5A059" stroke-width="2"/>
+  <circle cx="50" cy="50" r="41" stroke="#DFBA73" stroke-width="0.8" stroke-dasharray="2 2"/>
+  <text x="36" y="58" font-family="Georgia, serif" font-size="34" font-style="italic" fill="#FFFDF9" text-anchor="middle">S</text>
+  <text x="50" y="52" font-family="cursive" font-size="20" fill="#DFBA73" text-anchor="middle">&amp;</text>
+  <text x="64" y="59" font-family="Georgia, serif" font-size="34" font-style="italic" fill="#FFFDF9" text-anchor="middle">K</text>
+  <circle cx="50" cy="72" r="2" fill="#DFBA73"/>
+</svg>
