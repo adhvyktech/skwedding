@@ -127,7 +127,7 @@ export const weddingConfig: WeddingConfig = {
     invitationHeading: 'TOGETHER WITH THEIR FAMILIES',
     invitationSubtitle: 'We invite you to celebrate the beginning of our forever.',
     coreQuote: 'Two hearts. One promise. A lifetime together.',
-    heroPhoto: '/assets/photos/couple_hero.jpg',
+    heroPhoto: '/assets/photos/couple_traditional_kerala.jpg',
     embracePhoto: '/assets/photos/couple_embrace.jpg',
     outdoorPhoto: '/assets/photos/couple_outdoor.jpg',
     closeupPhoto: '/assets/photos/couple_closeup.jpg',
