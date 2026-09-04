@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { CinematicAvatarHero } from './components/CinematicAvatarHero/CinematicAvatarHero';
 import { Navbar } from './components/Navigation/Navbar';
 import { Hero } from './components/Hero/Hero';
 import { CoupleSection } from './components/CoupleSection/CoupleSection';
@@ -73,15 +74,20 @@ export function App() {
       {/* Floating Audio Ambient Controller with Micro-Chimes */}
       <AudioControl />
 
-      {/* Top Navbar */}
-      <Navbar onNavClick={scrollToSection} />
+      {/* 0. Cinematic Scroll-Driven 3D Couple Avatar Hero (Turntable Experience) */}
+      <CinematicAvatarHero onScrollToInvitation={() => scrollToSection('wedding-invitation-start')} />
 
-      <main>
-        {/* 1. Hero Section — Cinematic Opening */}
-        <Hero
-          onExploreClick={() => scrollToSection('celebrations')}
-          onRsvpClick={() => scrollToSection('rsvp')}
-        />
+      {/* Main Wedding Invitation Experience Begins Here */}
+      <div id="wedding-invitation-start">
+        {/* Top Navbar */}
+        <Navbar onNavClick={scrollToSection} />
+
+        <main>
+          {/* 1. Hero Section — Sacred Muhurtham & Portrait */}
+          <Hero
+            onExploreClick={() => scrollToSection('celebrations')}
+            onRsvpClick={() => scrollToSection('rsvp')}
+          />
 
         {/* 2. Couple Section — Editorial Split & Harmony */}
         <CoupleSection />
@@ -113,6 +119,7 @@ export function App() {
 
       {/* 11. Twilight Closing Footer */}
       <Footer onScrollToTop={scrollToTop} />
+      </div>
     </div>
   );
 }
